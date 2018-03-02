@@ -111,12 +111,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="476" y="132.68365817091455"/>
+            <point key="canvasLocation" x="513" y="134"/>
         </scene>
         <!--Detailed View Controller-->
         <scene sceneID="QrW-EW-0Rl">
             <objects>
-                <viewController id="AY1-m6-6rz" customClass="DetailedViewController" sceneMemberID="viewController">
+                <viewController id="AY1-m6-6rz" customClass="DetailedViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wYC-Qe-tLe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -181,11 +181,18 @@
         <!--Add Alerts View Controller-->
         <scene sceneID="JcK-Ep-KLZ">
             <objects>
-                <viewController id="HbP-Q6-ffW" customClass="AddAlertsViewController" sceneMemberID="viewController">
+                <viewController id="HbP-Q6-ffW" customClass="AddAlertsViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iou-XG-gTp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Alert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2U-oN-etq">
+                                <rect key="frame" x="149" y="86" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XzT-i4-S3m">
                                 <rect key="frame" x="0.0" y="155" width="375" height="162"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -201,26 +208,30 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Alert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2U-oN-etq">
-                                <rect key="frame" x="149" y="86" width="76" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q72-Gl-NTU">
+                                <rect key="frame" x="117" y="563" width="141" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="Set Alert"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="CAi-uB-VlY"/>
                     </view>
+                    <connections>
+                        <outlet property="inequalityAlertPicker" destination="P6N-Jy-263" id="drJ-4i-7Iw"/>
+                        <outlet property="setAlertButton" destination="Q72-Gl-NTU" id="Zo3-lp-VgT"/>
+                        <outlet property="typeOfAlertPicker" destination="XzT-i4-S3m" id="xRy-py-Bsa"/>
+                        <outlet property="valueTextField" destination="2Dd-Xo-Zqz" id="JJr-A7-Ewh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15d-St-f06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="610.39999999999998" y="858.62068965517244"/>
+            <point key="canvasLocation" x="2845.5999999999999" y="975.56221889055485"/>
         </scene>
         <!--Add Favorites View Controller-->
         <scene sceneID="8xI-sh-ov1">
             <objects>
-                <viewController id="2JK-uV-4Ug" customClass="AddFavoritesViewController" sceneMemberID="viewController">
+                <viewController id="2JK-uV-4Ug" customClass="AddFavoritesViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h8U-Al-jgi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -277,12 +288,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1488.8" y="856.82158920539734"/>
+            <point key="canvasLocation" x="2151" y="976"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="R8e-1W-mF7">
             <objects>
-                <viewController id="j10-Nu-87K" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController id="j10-Nu-87K" customClass="SettingsViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L1f-GP-fBZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -322,7 +333,7 @@
         <!--Alerts View Controller-->
         <scene sceneID="YD5-1g-kd7">
             <objects>
-                <viewController id="IOu-p5-1PP" customClass="AlertsViewController" sceneMemberID="viewController">
+                <viewController id="IOu-p5-1PP" customClass="AlertsViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U2J-ga-p9Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
