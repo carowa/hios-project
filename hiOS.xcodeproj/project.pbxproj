@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08C67EC12049CFAF000B401F /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C67EC02049CFAF000B401F /* DetailedViewController.swift */; };
+		08C67EC32049D012000B401F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C67EC22049D012000B401F /* SettingsViewController.swift */; };
+		08C67EC52049D02C000B401F /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C67EC42049D02C000B401F /* AlertsViewController.swift */; };
+		08C67EC72049D043000B401F /* AddAlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C67EC62049D043000B401F /* AddAlertsViewController.swift */; };
+		08C67EC92049D04F000B401F /* AddFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C67EC82049D04F000B401F /* AddFavoritesViewController.swift */; };
 		08CAB3272048830C007D7834 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CAB3262048830C007D7834 /* AppDelegate.swift */; };
 		08CAB3292048830C007D7834 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CAB3282048830C007D7834 /* ViewController.swift */; };
 		08CAB32C2048830D007D7834 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CAB32A2048830D007D7834 /* Main.storyboard */; };
@@ -15,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08C67EC02049CFAF000B401F /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
+		08C67EC22049D012000B401F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		08C67EC42049D02C000B401F /* AlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
+		08C67EC62049D043000B401F /* AddAlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertsViewController.swift; sourceTree = "<group>"; };
+		08C67EC82049D04F000B401F /* AddFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoritesViewController.swift; sourceTree = "<group>"; };
 		08CAB3232048830C007D7834 /* hiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08CAB3262048830C007D7834 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08CAB3282048830C007D7834 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +67,11 @@
 				08CAB3262048830C007D7834 /* AppDelegate.swift */,
 				08CAB3282048830C007D7834 /* ViewController.swift */,
 				08CAB32A2048830D007D7834 /* Main.storyboard */,
+				08C67EC02049CFAF000B401F /* DetailedViewController.swift */,
+				08C67EC22049D012000B401F /* SettingsViewController.swift */,
+				08C67EC42049D02C000B401F /* AlertsViewController.swift */,
+				08C67EC62049D043000B401F /* AddAlertsViewController.swift */,
+				08C67EC82049D04F000B401F /* AddFavoritesViewController.swift */,
 				08CAB32D2048830D007D7834 /* Assets.xcassets */,
 				08CAB32F2048830D007D7834 /* LaunchScreen.storyboard */,
 				08CAB3322048830D007D7834 /* Info.plist */,
@@ -136,8 +151,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08C67EC92049D04F000B401F /* AddFavoritesViewController.swift in Sources */,
 				08CAB3292048830C007D7834 /* ViewController.swift in Sources */,
 				08CAB3272048830C007D7834 /* AppDelegate.swift in Sources */,
+				08C67EC52049D02C000B401F /* AlertsViewController.swift in Sources */,
+				08C67EC12049CFAF000B401F /* DetailedViewController.swift in Sources */,
+				08C67EC32049D012000B401F /* SettingsViewController.swift in Sources */,
+				08C67EC72049D043000B401F /* AddAlertsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
