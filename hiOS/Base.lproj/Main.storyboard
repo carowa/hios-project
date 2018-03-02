@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Title-->
+        <!--TITLE-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="hiOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -98,7 +98,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="Qfl-ej-jS4">
+                    <navigationItem key="navigationItem" title="TITLE" id="Qfl-ej-jS4">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Zx4-PU-SPp">
                             <connections>
                                 <segue destination="j10-Nu-87K" kind="show" id="w1d-9v-3qY"/>
@@ -254,13 +254,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="loy-hB-Gcl">
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zF4-7y-qLb">
                                 <rect key="frame" x="0.0" y="64" width="375" height="56"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="2JK-uV-4Ug" id="PKX-Xc-OGP"/>
-                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -274,7 +271,6 @@
                 <searchDisplayController id="qy9-aI-T0z">
                     <connections>
                         <outlet property="delegate" destination="2JK-uV-4Ug" id="Jw3-Q5-epb"/>
-                        <outlet property="searchBar" destination="loy-hB-Gcl" id="YpS-AP-Rcy"/>
                         <outlet property="searchContentsController" destination="2JK-uV-4Ug" id="eJt-w9-sBw"/>
                         <outlet property="searchResultsDataSource" destination="2JK-uV-4Ug" id="MB1-Mw-LKz"/>
                         <outlet property="searchResultsDelegate" destination="2JK-uV-4Ug" id="NnN-hd-34N"/>
