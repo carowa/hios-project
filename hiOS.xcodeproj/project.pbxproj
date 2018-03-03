@@ -17,6 +17,7 @@
 		08CAB32C2048830D007D7834 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CAB32A2048830D007D7834 /* Main.storyboard */; };
 		08CAB32E2048830D007D7834 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08CAB32D2048830D007D7834 /* Assets.xcassets */; };
 		08CAB3312048830D007D7834 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CAB32F2048830D007D7834 /* LaunchScreen.storyboard */; };
+		6B5B4AC02049DD7F0080B92E /* CoinAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B4ABF2049DD7F0080B92E /* CoinAPIHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		08CAB32D2048830D007D7834 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08CAB3302048830D007D7834 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08CAB3322048830D007D7834 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B5B4ABF2049DD7F0080B92E /* CoinAPIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAPIHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		08CAB3252048830C007D7834 /* hiOS */ = {
 			isa = PBXGroup;
 			children = (
+				6B5B4ABF2049DD7F0080B92E /* CoinAPIHelper.swift */,
 				08CAB3262048830C007D7834 /* AppDelegate.swift */,
 				08CAB3282048830C007D7834 /* ViewController.swift */,
 				08CAB32A2048830D007D7834 /* Main.storyboard */,
@@ -152,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08C67EC92049D04F000B401F /* AddFavoritesViewController.swift in Sources */,
+				6B5B4AC02049DD7F0080B92E /* CoinAPIHelper.swift in Sources */,
 				08CAB3292048830C007D7834 /* ViewController.swift in Sources */,
 				08CAB3272048830C007D7834 /* AppDelegate.swift in Sources */,
 				08C67EC52049D02C000B401F /* AlertsViewController.swift in Sources */,
