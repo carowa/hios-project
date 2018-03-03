@@ -1,5 +1,5 @@
 //
-//  Request.swift
+//  CoinAPIHelper.swift
 //  hiOS
 //
 //  Created by Justin I. on 3/1/18.
@@ -28,8 +28,8 @@ struct Cryptocurrency {
     var percentChangeWeek: Double
     /// Unix time since the data was updated
     var lastUpdated: Int
-    
-    /// Initializer for struct
+
+    /// Creates a new Cryptocurrency
     init(id: String, name: String, symbol: String, rank: Int, priceUSD: Double, percentChangeHour: Double, percentChangeDay: Double, percentChangeWeek: Double, lastUpdated: Int) {
         self.id = id
         self.name = name
@@ -43,6 +43,7 @@ struct Cryptocurrency {
     }
 }
 
+/// Extends Cryptocurrency to adopt the Decodable protocol
 extension Cryptocurrency: Decodable {
     /// Declare keys in association between Swift variables and the API's JSON naming
     fileprivate enum CodingKeys: String, CodingKey {
@@ -56,7 +57,7 @@ extension Cryptocurrency: Decodable {
         case percentChangeWeek = "percent_change_7d"
         case lastUpdated = "last_updated"
     }
-    
+
     /// Initializer for Decodable
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self) // defining our (keyed) container
@@ -70,7 +71,7 @@ extension Cryptocurrency: Decodable {
         let percentChangeWeek: Double = try Double(container.decode(String.self, forKey: .percentChangeWeek))!
         let lastUpdated: Int = try Int(container.decode(String.self, forKey: .lastUpdated))!
 
-        self.init(id: id, name: name, symbol: symbol, rank: rank, priceUSD: priceUSD, percentChangeHour: percentChangeHour, percentChangeDay: percentChangeDay, percentChangeWeek: percentChangeWeek, lastUpdated: lastUpdated) // initializing our struct
+        self.init(id: id, name: name, symbol: symbol, rank: rank, priceUSD: priceUSD, percentChangeHour: percentChangeHour, percentChangeDay: percentChangeDay, percentChangeWeek: percentChangeWeek, lastUpdated: lastUpdated) // Initializing a Cryptocurrency
     }
 }
 
@@ -85,11 +86,11 @@ class CoinAPIHelper: NSObject {
      - Ticker: Contains information about individual cryptocurrencies.
      - Global: Contains information about the aggregate sum of all cryptocurrencies.
     */
-    private enum endpoints: String {
+    private enum Endpoints: String {
         case ticker = "/ticker/"
         case global = "/global/"
     }
-    
+
     // MARK: Public functions
     /**
      Updates the stored information using data from the CoinMarketCap API
@@ -99,10 +100,10 @@ class CoinAPIHelper: NSObject {
         // Create URLSession and start a download task
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
-        let task = session.downloadTask(with: url.appendingPathComponent(endpoints.ticker.rawValue))
+        let task = session.downloadTask(with: url.appendingPathComponent(Endpoints.ticker.rawValue))
         task.resume()
     }
-    
+
     // MARK: Private functions
     /**
      Attempts to load and copy JSON from local storage `at` url to a static location. If `at` is nil,
@@ -157,7 +158,7 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
         // Attempt to load JSON from the download at location
         loadFromLocalStorage(at: location)
     }
-    
+
     /**
      Tells the delegate that the task finished transferring data.
      
