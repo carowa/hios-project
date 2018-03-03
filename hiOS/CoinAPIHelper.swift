@@ -43,6 +43,30 @@ struct Cryptocurrency {
     }
 }
 
+/// Singleton object to store parsed JSON data
+class CryptoRepo {
+    static let shared = CryptoRepo()
+    
+    private var order : [String] = []
+    private var cryptoList : [String : Cryptocurrency] = [:]
+    
+    // Adds the given an element of type Cryptocurrency
+    func add(element : Cryptocurrency) {
+        let key : String = element.id
+        cryptoList[key] = element
+    }
+    
+    // Returns the list of cryptocurrency elements
+    func getCryptoList() -> [Cryptocurrency] {
+        return Array(cryptoList.values)
+    }
+    
+    // Preserves the order of insertion
+    func trackOrder(name : String) {
+        order.append(name)
+    }
+}
+
 /// Extends Cryptocurrency to adopt the Decodable protocol
 extension Cryptocurrency: Decodable {
     /// Declare keys in association between Swift variables and the API's JSON naming
@@ -130,8 +154,13 @@ class CoinAPIHelper: NSObject {
             // Load JSON data
             let cryptoData = try Data(contentsOf: saveToURL)
             let cryptoArray = try JSONDecoder().decode([Cryptocurrency].self, from: cryptoData)
-            // FIXME: Do more than print the resulting array
-            print(cryptoArray)
+            
+            // Populate CryptoRepo
+            let cryptoRepo = CryptoRepo.shared
+            for e in cryptoArray {
+                cryptoRepo.add(element: e)
+                cryptoRepo.trackOrder(name: e.id)
+            }
         } catch (let writeError) {
             print("Error reading/writing from file in CoinAPIHelper: \(writeError)")
         }
