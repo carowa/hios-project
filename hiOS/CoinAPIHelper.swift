@@ -43,30 +43,6 @@ struct Cryptocurrency {
     }
 }
 
-/// Singleton object to store parsed JSON data
-class CryptoRepo {
-    static let shared = CryptoRepo()
-    
-    private var order : [String] = []
-    private var cryptoList : [String : Cryptocurrency] = [:]
-    
-    // Adds the given an element of type Cryptocurrency
-    func add(element : Cryptocurrency) {
-        let key : String = element.id
-        cryptoList[key] = element
-    }
-    
-    // Returns the list of cryptocurrency elements
-    func getCryptoList() -> [Cryptocurrency] {
-        return Array(cryptoList.values)
-    }
-    
-    // Preserves the order of insertion
-    func trackOrder(name : String) {
-        order.append(name)
-    }
-}
-
 /// Extends Cryptocurrency to adopt the Decodable protocol
 extension Cryptocurrency: Decodable {
     /// Declare keys in association between Swift variables and the API's JSON naming
@@ -96,6 +72,43 @@ extension Cryptocurrency: Decodable {
         let lastUpdated: Int = try Int(container.decode(String.self, forKey: .lastUpdated))!
 
         self.init(id: id, name: name, symbol: symbol, rank: rank, priceUSD: priceUSD, percentChangeHour: percentChangeHour, percentChangeDay: percentChangeDay, percentChangeWeek: percentChangeWeek, lastUpdated: lastUpdated) // Initializing a Cryptocurrency
+    }
+}
+
+
+/// Singleton object to store parsed JSON data
+class CryptoRepo {
+    static let shared = CryptoRepo()
+    
+    private var order: [String] = []
+    private var cryptoList: [String: Cryptocurrency] = [:]
+    
+    /**
+     Adds the given an element of type Cryptocurrency
+     
+     - Parameter element: `Cryptocurrency` element to add to list
+    */
+    func add(element : Cryptocurrency) {
+        let key : String = element.id
+        cryptoList[key] = element
+    }
+    
+    /**
+     Returns an `Array` of `Cryptocurrency` elements
+     
+     - Returns: An `Array` containing the `Cryptocurrency` elements in the list
+    */
+    func getCryptoList() -> [Cryptocurrency] {
+        return Array(cryptoList.values)
+    }
+    
+    /**
+     Preserves the order of insertion
+     
+     - Parameter name: Name of `Cryptocurrency` to preserve order of
+    */
+    func trackOrder(name : String) {
+        order.append(name)
     }
 }
 
@@ -133,7 +146,7 @@ class CoinAPIHelper: NSObject {
      Attempts to load and copy JSON from local storage `at` url to a static location. If `at` is nil,
      attempt to load JSON from the static location only.
      
-     - at: URL location of a location to load and copy from, or nil to load from a static location
+     - Parameter at: URL location of a location to load and copy from, or nil to load from a static location
     */
     private func loadFromLocalStorage(at: URL?) {
         do {
@@ -172,9 +185,9 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
     /**
      Tells the delegate that a download task has finished downloading.
      
-     - session: The session containing the download task that finished.
-     - downloadTask: The download task that finished.
-     - location: A file URL for the temporary file. Because the file is temporary, you must either open the file for reading or move it to a permanent location in your app’s sandbox container directory before returning from this delegate method.
+     - Parameter session: The session containing the download task that finished.
+     - Parameter downloadTask: The download task that finished.
+     - Parameter location: A file URL for the temporary file. Because the file is temporary, you must either open the file for reading or move it to a permanent location in your app’s sandbox container directory before returning from this delegate method.
      If you choose to open the file for reading, you should do the actual reading in another thread to avoid blocking the delegate queue.
      */
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
@@ -191,9 +204,9 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
     /**
      Tells the delegate that the task finished transferring data.
      
-     - session: The session containing the task whose request finished transferring data.
-     - task: The task whose request finished transferring data.
-     - error: If an error occurred, an error object indicating how the transfer failed, otherwise NULL.
+     - Parameter session: The session containing the task whose request finished transferring data.
+     - Parameter task: The task whose request finished transferring data.
+     - Parameter error: If an error occurred, an error object indicating how the transfer failed, otherwise NULL.
     */
     internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if error != nil {
