@@ -8,8 +8,11 @@
 
 import UIKit
 
-class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
+    
+    
+    @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var typeOfAlertPicker: UIPickerView!
     
@@ -19,9 +22,12 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     @IBOutlet weak var setAlertButton: UIButton!
     
+    var alertType:String = ""
+    var inequality:String = ""
     
-    var alertTypeArray:[String] = ["Percent Value", "Currency Value"]
-    var inequalityArray:[String] = ["<", "=", ">"]
+    
+    var alertTypeArray:[String] = ["", "Percent Value", "Currency Value"]
+    var inequalityArray:[String] = ["", "<", "=", ">"]
     
     
     override func viewDidLoad() {
@@ -30,13 +36,21 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         typeOfAlertPicker.dataSource = self
         inequalityAlertPicker.delegate = self
         inequalityAlertPicker.dataSource = self
-        // Do any additional setup after loading the view.
+        valueTextField.delegate = self
+        valueTextField.keyboardType = UIKeyboardType.asciiCapableNumberPad
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func setAlert(_ sender: UIButton) {
+        if alertType != "" && inequality != "" && valueTextField.text != "" {
+            titleLabel.text = alertType + inequality + valueTextField.text!
+        }
+    }
+    
 
     // returns the number of 'columns' to display.
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -64,7 +78,17 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if(pickerView == typeOfAlertPicker) {
+            alertType = alertTypeArray[row]
+        } else {
+            inequality = inequalityArray[row]
+        }
+    }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
     }
 
 }
