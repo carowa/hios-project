@@ -41,8 +41,8 @@ class FavoritesRepo {
      - Returns: The index of the element or -1 if the element is not found
     */
     private func findItem(name : String) -> Int {
-        for i in 0...list.count {
-            let e : String = list[i]
+        for i in 0..<list.count {
+            let e: String = list[i]
             if e == name {
                 return i
             }
