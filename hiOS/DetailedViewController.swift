@@ -10,18 +10,46 @@ import UIKit
 
 class DetailedViewController: UIViewController {
 
+    var currency:Cryptocurrency? = nil
+    
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var currentPriceLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        titleLabel.text = currency?.name
+        idLabel.text = currency?.symbol
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func showHourPercentChange(_ sender: UIButton) {
+        if currency != nil {
+            let curr:Cryptocurrency = currency!
+            let percentChange:String = String(format:"%.1f", curr.percentChangeHour)
+            currentPriceLabel.text = percentChange
+        }
+    }
+    
+    @IBAction func showDayPercentChange(_ sender: UIButton) {
+        if currency != nil {
+            let curr:Cryptocurrency = currency!
+            let percentChange:String = String(format:"%.1f", curr.percentChangeDay)
+            currentPriceLabel.text = percentChange
+        }
+    }
+    
+    @IBAction func showWeekPercentChange(_ sender: UIButton) {
+        if currency != nil {
+            let curr:Cryptocurrency = currency!
+            let percentChange:String = String(format:"%.1f", curr.percentChangeWeek)
+            currentPriceLabel.text = percentChange
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
