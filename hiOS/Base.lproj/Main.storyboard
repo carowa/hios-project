@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-gm-Dwd">
-                                        <rect key="frame" x="0.0" y="52" width="375" height="551"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="551" id="J8A-45-z83"/>
@@ -76,7 +76,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="TDq-gm-Dwd" firstAttribute="top" secondItem="eeM-X9-Y7c" secondAttribute="top" constant="52" id="TYA-6M-aLD"/>
+                                    <constraint firstItem="TDq-gm-Dwd" firstAttribute="top" secondItem="eeM-X9-Y7c" secondAttribute="top" id="TYA-6M-aLD"/>
                                     <constraint firstItem="eeM-X9-Y7c" firstAttribute="trailing" secondItem="TDq-gm-Dwd" secondAttribute="trailing" id="jEf-YR-yHm"/>
                                     <constraint firstItem="TDq-gm-Dwd" firstAttribute="leading" secondItem="eeM-X9-Y7c" secondAttribute="leading" id="l8C-CD-qrD"/>
                                 </constraints>
