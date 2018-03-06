@@ -16,12 +16,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var favoritesTableView: UITableView!
     
-    @IBAction func populateOnClick(_ sender: UIButton) {
-        cryptoList = cryptoRepo.getCryptoList()
-//        print(cryptoList)
-        favoritesTableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         favoritesTableView.delegate = self

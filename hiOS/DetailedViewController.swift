@@ -21,7 +21,7 @@ class DetailedViewController: UIViewController {
         super.viewDidLoad()
         titleLabel.text = currency?.name
         idLabel.text = currency?.symbol
-        currentPriceLabel.text = String(format:"%.1f", currency!.priceUSD)
+        currentPriceLabel.text = "$" + String(format:"%.1f", currency!.priceUSD)
         percentChangeLabel.text = ""
     }
 
@@ -40,6 +40,11 @@ class DetailedViewController: UIViewController {
     @IBAction func showWeekPercentChange(_ sender: UIButton) {
         percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeWeek) + "%"
     }
+    
+    @IBAction func addCurrencyToFavorites(_ sender: UIButton) {
+        // TODO: add currency to favorites array and change appearance of button when pressed
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "showAddAlertSegue") {

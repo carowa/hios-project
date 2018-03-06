@@ -17,6 +17,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var inequalityAlertPicker: UIPickerView!
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var setAlertButton: UIButton!
+    @IBOutlet weak var alertLabel: UILabel!
     
     var alertType:String = ""
     var inequality:String = ""
@@ -33,6 +34,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         inequalityAlertPicker.dataSource = self
         valueTextField.delegate = self
         valueTextField.keyboardType = UIKeyboardType.asciiCapableNumberPad
+        titleLabel.text = "Set New Alert for \(currency?.name ?? "nil")"
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +44,8 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     @IBAction func setAlert(_ sender: UIButton) {
         if alertType != "" && inequality != "" && valueTextField.text != "" {
-            titleLabel.text = alertType + inequality + valueTextField.text!
+            // delete this
+            alertLabel.text = alertType + inequality + valueTextField.text!
             /* TODO: add alert object to array
             
              alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
@@ -88,6 +91,13 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailSegue" {
+            let detailedController = segue.destination as! DetailedViewController
+            detailedController.currency = currency
+        }
     }
 
 }
