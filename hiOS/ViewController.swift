@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
+        
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: #selector(ViewController.populate), for: UIControlEvents.valueChanged)
         favoritesTableView.addSubview(refresher)
@@ -33,19 +34,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cryptoList.count
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
-        print("table view")
         let id = cryptoList[indexPath.row].name //+ " - " + cryptoList[indexPath.row].id
         cell.identifierLabel?.text = id
         cell.priceLabel?.text = String(cryptoList[indexPath.row].priceUSD)
@@ -53,14 +57,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == favoritesTableView {
             myFavoritesIndex = indexPath.row
             performSegue(withIdentifier: "showDetailSegue", sender: self)
         }
     }
     
-    @objc func populate() {
+    // TODO: Remove populate option from the main table view later
+    @IBAction func populate(_ sender: UIButton) {
         cryptoList = cryptoRepo.getCryptoList()
         favoritesTableView.reloadData()
         refresher.endRefreshing()
