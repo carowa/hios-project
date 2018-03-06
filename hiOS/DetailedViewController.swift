@@ -15,11 +15,14 @@ class DetailedViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var currentPriceLabel: UILabel!
+    @IBOutlet weak var percentChangeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = currency?.name
         idLabel.text = currency?.symbol
+        currentPriceLabel.text = String(format:"%.1f", currency!.priceUSD)
+        percentChangeLabel.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,37 +30,23 @@ class DetailedViewController: UIViewController {
     }
     
     @IBAction func showHourPercentChange(_ sender: UIButton) {
-        if currency != nil {
-            let curr:Cryptocurrency = currency!
-            let percentChange:String = String(format:"%.1f", curr.percentChangeHour)
-            currentPriceLabel.text = percentChange
-        }
+        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
     }
     
     @IBAction func showDayPercentChange(_ sender: UIButton) {
-        if currency != nil {
-            let curr:Cryptocurrency = currency!
-            let percentChange:String = String(format:"%.1f", curr.percentChangeDay)
-            currentPriceLabel.text = percentChange
-        }
+        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeDay) + "%"
     }
     
     @IBAction func showWeekPercentChange(_ sender: UIButton) {
-        if currency != nil {
-            let curr:Cryptocurrency = currency!
-            let percentChange:String = String(format:"%.1f", curr.percentChangeWeek)
-            currentPriceLabel.text = percentChange
-        }
+        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeWeek) + "%"
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "showAddAlertSegue") {
+            let addAlertController = segue.destination as! AddAlertsViewController
+            addAlertController.currency = currency
+        }
     }
-    */
+
 
 }

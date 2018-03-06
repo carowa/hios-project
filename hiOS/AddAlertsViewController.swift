@@ -10,21 +10,16 @@ import UIKit
 
 class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     let alerts = Alerts.shared
-    
+    var currency:Cryptocurrency? = nil
     
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var typeOfAlertPicker: UIPickerView!
-    
     @IBOutlet weak var inequalityAlertPicker: UIPickerView!
-    
     @IBOutlet weak var valueTextField: UITextField!
-    
     @IBOutlet weak var setAlertButton: UIButton!
     
     var alertType:String = ""
     var inequality:String = ""
-    
     
     var alertTypeArray:[String] = ["", "Percent Value", "Currency Value"]
     var inequalityArray:[String] = ["", "<", "=", ">"]
@@ -48,8 +43,10 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBAction func setAlert(_ sender: UIButton) {
         if alertType != "" && inequality != "" && valueTextField.text != "" {
             titleLabel.text = alertType + inequality + valueTextField.text!
-            // TODO: add alert object to array
-            alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
+            /* TODO: add alert object to array
+            
+             alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
+            */
         }
     }
     
