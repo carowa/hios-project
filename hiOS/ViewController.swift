@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let cryptoRepo = CryptoRepo.shared
     var cryptoList:[Cryptocurrency] = []
     var refresher:UIRefreshControl = UIRefreshControl()
+    private var myFavoritesIndex:Int = 0
     
     @IBOutlet weak var favoritesTableView: UITableView!
     
@@ -48,6 +49,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 50
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
         print("table view")
         let id = cryptoList[indexPath.row].name //+ " - " + cryptoList[indexPath.row].id
@@ -58,14 +60,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == favoritesTableView {
+            myFavoritesIndex = indexPath.row
+            performSegue(withIdentifier: "showDetailSegue", sender: self)
+        }
     }
     
     @objc func populate() {
-        
         cryptoList = cryptoRepo.getCryptoList()
-        print(cryptoList)
         favoritesTableView.reloadData()
         refresher.endRefreshing()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "showDetailSegue") {
+            let detailedController = segue.destination as! DetailedViewController
+            detailedController.currency = cryptoList[myFavoritesIndex]
+        }
     }
 }
 
