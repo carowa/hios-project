@@ -9,7 +9,7 @@
 import UIKit
 
 class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
-
+    let alerts = Alerts.shared
     
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -48,6 +48,8 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBAction func setAlert(_ sender: UIButton) {
         if alertType != "" && inequality != "" && valueTextField.text != "" {
             titleLabel.text = alertType + inequality + valueTextField.text!
+            // TODO: add alert object to array
+            alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
         }
     }
     
