@@ -285,17 +285,6 @@
                                 <rect key="frame" x="16" y="93" width="207" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9a-Iq-VfH">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Done" id="AfV-8z-sX4">
-                                        <connections>
-                                            <segue destination="AY1-m6-6rz" kind="show" identifier="showDetailSegue" id="q9B-RI-Ma9"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="CAi-uB-VlY"/>
@@ -496,7 +485,4 @@
             <point key="canvasLocation" x="-294" y="135"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="JIR-1J-r2i"/>
-    </inferredMetricsTieBreakers>
 </document>
