@@ -9,13 +9,88 @@
 import Foundation
 import UserNotifications
 
+class Alert {
+    private var id : String
+    
+    // creates an empty alert object
+    init(id : String) {
+        self.id = id
+    }
+    
+    // track the alert type
+    private var percentVal : Bool = false
+    private var currVal : Bool = false
+
+    // default: no alert == ""
+    private var inequality : String = ""
+    private var value : Int = 0
+    
+    /*
+     Returns the id of the alert object (id property of the cryptocurrency)
+     */
+    func getId() -> String {
+        return id
+    }
+
+    /*
+     Sets the inequality to keep track of
+     
+     - Parameter ineq: is a string representing the bound on an alert
+    */
+    func setInequality(ineq : String) {
+        inequality = ineq
+    }
+
+    /*
+     Returns the inequality setting on the alert
+     */
+    func getInequality() -> String {
+        return inequality
+    }
+    
+    /*
+     Sets the alert type on the alert object
+     
+     - Parameter type: the type of constraint on the alert(either Percent value or Currency value)
+    */
+    func setAlertType(type: String) {
+        if type == "Percent Value" {
+            percentVal = true
+            currVal = false
+        } else if type == "Currency Value" {
+            currVal = true
+            percentVal = false
+        }
+    }
+    
+    /*
+     Sets the alert's value
+     
+     - Parameter input: is the value to which the constraint is applied to
+    */
+    func setAlertValue(input: Int) {
+        value = input
+    }
+}
+
 /// Singleton object to store user's Alert preferences
 class Alerts: NSObject {
     static let shared = Alerts()
     
-    // TODO: Add properties
+    private var alertsRepo : [String : Alert] = [:]
+
+    func getAlerts() -> [Alert] {
+        return Array(alertsRepo.values)
+    }
     
-    // TODO: Add functions to edit Alert preferences
+    func addAlert(id: String, alertType: String, ineq: String, value: Int) {
+        let alert = Alert(id: id)
+        alert.setAlertType(type: alertType)
+        alert.setInequality(ineq: ineq)
+        alert.setAlertValue(input: value)
+        alertsRepo[alert.getId()] = alert
+        print("Alert is added to the repo!")
+    }
 }
 
 /// Adds Notification support by adopting the UNUserNotificationCenterDelegate protocol
