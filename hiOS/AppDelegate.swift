@@ -33,8 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         // TODO: Fix so that the completionHandler is only called with .newData when it is actually needed
         completionHandler(.newData)
         
-        // Create a test notification
-        // Alerts.shared.makeNotification(title: "Test Price Changed Alert", body: "x has changed by y%")
+        // Check on Alerts status
         Alerts.shared.checkStatus()
     }
 
