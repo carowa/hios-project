@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailedViewController: UIViewController {
-
+    var addedAlert:Bool = false
     var currency:Cryptocurrency? = nil
     
     @IBOutlet weak var idLabel: UILabel!
@@ -23,6 +23,14 @@ class DetailedViewController: UIViewController {
         idLabel.text = currency?.symbol
         currentPriceLabel.text = "$" + String(format:"%.2f", currency!.priceUSD)
         percentChangeLabel.text = ""
+        if addedAlert {
+            navigationItem.hidesBackButton = true
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .done, target: self, action: #selector(goToMainView))
+        }
+    }
+    
+    @objc private func goToMainView() {
+        performSegue(withIdentifier: "showMainSegue", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,6 +58,9 @@ class DetailedViewController: UIViewController {
         if(segue.identifier == "showAddAlertSegue") {
             let addAlertController = segue.destination as! AddAlertsViewController
             addAlertController.currency = currency
+        } else if(segue.identifier == "showMainSegue") {
+            let mainController = segue.destination as! ViewController
+            mainController.addedAlert = true
         }
     }
 

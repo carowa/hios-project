@@ -50,6 +50,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
             
              alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
             */
+            performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
     }
     
@@ -94,9 +95,10 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetailSegue" {
-            let detailedController = segue.destination as! DetailedViewController
-            detailedController.currency = currency
+        if segue.identifier == "showAllAlertsSegue" {
+            let allAlertsController = segue.destination as! AlertsViewController
+            allAlertsController.currency = currency
+            allAlertsController.addedAlert = true
         }
     }
 
