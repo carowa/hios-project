@@ -27,7 +27,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // FIXME: Remove example loading when unneeded
         let c = CoinAPIHelper()
-        c.update()
+        c.update() {
+            print("Download Finished Here!!")
+        }
     }
 
     override func didReceiveMemoryWarning() {

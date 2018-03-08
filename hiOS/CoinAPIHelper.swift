@@ -130,14 +130,48 @@ class CoinAPIHelper: NSObject {
 
     // MARK: Public functions
     /**
-     Updates the stored information using data from the CoinMarketCap API
+     Deprecated: Updates the stored information using data from the CoinMarketCap API
      */
+    @available(*, deprecated, message: "Deprecated because async functionality not documented, nor handled correctly. Please use update(completionHandler:)")
     public func update() {
         // TODO: Check for network connectivity
         // Create URLSession and start a download task
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
         let task = session.downloadTask(with: url.appendingPathComponent(Endpoints.ticker.rawValue))
+        task.resume()
+    }
+    
+    /**
+     Updates the stored information using data from the CoinMarketCap API and calls a handler upon completion.
+     
+     - Parameter completionHandler: The completion handler to call when the load request is complete.
+     */
+    public func update(completionHandler: @escaping () -> Void) {
+        // TODO: Check for network connectivity
+        // Create URLSession and start a download task
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+        let task = session.downloadTask(with: url.appendingPathComponent(Endpoints.ticker.rawValue)) {
+            location, response, error in
+            if error != nil {
+                print("Error downloading file: \(error.debugDescription)")
+            }
+            guard let localLocation: URL = location else {
+                print("Error grabbing local url from download.")
+                return
+            }
+            // Check for HTTP status code 2xx
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    print ("Server error in downloading from API in CoinAPIHelper")
+                    return
+            }
+            // Attempt to load JSON from the download at location
+            self.loadFromLocalStorage(at: localLocation)
+            // Call the user defined completion handler
+            completionHandler()
+        }
         task.resume()
     }
 
