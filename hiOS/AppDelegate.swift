@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         // Request authorization for notification permissions
         Alerts.shared.askForNotificationPermissions()
-
         return true
     }
     
@@ -35,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         completionHandler(.newData)
         
         // Create a test notification
-        Alerts.shared.makeNotification(title: "Test Price Changed Alert", body: "x has changed by y%")
+        // Alerts.shared.makeNotification(title: "Test Price Changed Alert", body: "x has changed by y%")
+        Alerts.shared.checkStatus()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

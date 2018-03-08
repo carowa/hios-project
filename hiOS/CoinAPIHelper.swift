@@ -110,6 +110,13 @@ class CryptoRepo {
     func trackOrder(name : String) {
         order.append(name)
     }
+    
+    /*
+     
+    */
+    func getElemById(id : String) -> Cryptocurrency {
+        return cryptoList[id]!
+    }
 }
 
 /// A way to communicate with the CoinMarketCap API

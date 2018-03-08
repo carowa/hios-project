@@ -47,7 +47,9 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         if alertType != "" && inequality != "" && valueTextField.text != "" {
             // delete this
             alertLabel.text = alertType + inequality + valueTextField.text!
-            alerts.addAlert(id: self.id, alertType: self.alertType, ineq: self.inequality, value: Int(valueTextField.text!)!)
+            alerts.addAlert(id: self.id, alertType: self.alertType, ineq: self.inequality,
+                            value: Int(valueTextField.text!)!, price: (currency?.priceUSD)!)
+            
             /* TODO: add alert object to array
             
              alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
