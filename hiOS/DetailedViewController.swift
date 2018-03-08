@@ -21,7 +21,7 @@ class DetailedViewController: UIViewController {
         super.viewDidLoad()
         titleLabel.text = currency?.name
         idLabel.text = currency?.symbol
-        currentPriceLabel.text = "$" + String(format:"%.1f", currency!.priceUSD)
+        currentPriceLabel.text = "$" + String(format:"%.2f", currency!.priceUSD)
         percentChangeLabel.text = ""
     }
 
