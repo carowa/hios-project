@@ -9,6 +9,8 @@
 import UIKit
 
 class AddFavoritesViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

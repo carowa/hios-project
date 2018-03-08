@@ -38,16 +38,16 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaf-ib-VFT">
-                                                            <rect key="frame" x="15" y="11" width="345" height="50"/>
+                                                            <rect key="frame" x="15" y="11" width="637" height="50"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identifier" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLJ-oG-57t">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="259.5" height="50"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="479" height="50"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-IN-71Y">
-                                                                    <rect key="frame" x="259.5" y="0.0" width="85.5" height="50"/>
+                                                                    <rect key="frame" x="479" y="0.0" width="158" height="50"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -255,28 +255,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="alert is..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNm-wO-n92">
-                                <rect key="frame" x="34" y="426" width="307" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Dd-Xo-Zqz">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Dd-Xo-Zqz">
                                 <rect key="frame" x="109" y="350" width="156" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="156" id="aHT-fE-Ho1"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdC-Ug-fc2">
-                                <rect key="frame" x="70" y="388" width="234" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Alert"/>
-                                <connections>
-                                    <action selector="setAlert:" destination="HbP-Q6-ffW" eventType="touchUpInside" id="dXa-kJ-AWX"/>
-                                </connections>
-                            </button>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6N-Jy-263">
                                 <rect key="frame" x="231" y="93" width="128" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -285,12 +272,28 @@
                                 <rect key="frame" x="16" y="93" width="207" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdC-Ug-fc2">
+                                <rect key="frame" x="155" y="388" width="65" height="30"/>
+                                <state key="normal" title="Add Alert"/>
+                                <connections>
+                                    <action selector="setAlert:" destination="HbP-Q6-ffW" eventType="touchUpInside" id="dXa-kJ-AWX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CAi-uB-VlY" firstAttribute="bottom" secondItem="CdC-Ug-fc2" secondAttribute="bottom" constant="249" id="dgM-l0-bpr">
+                                <variation key="heightClass=compact-widthClass=compact" constant="150"/>
+                            </constraint>
+                            <constraint firstItem="CdC-Ug-fc2" firstAttribute="leading" secondItem="CAi-uB-VlY" secondAttribute="leading" constant="155" id="gRK-Ea-rtX">
+                                <variation key="heightClass=compact-widthClass=compact" constant="500"/>
+                            </constraint>
+                            <constraint firstItem="CdC-Ug-fc2" firstAttribute="centerX" secondItem="2Dd-Xo-Zqz" secondAttribute="centerX" id="oDi-nl-bWF"/>
+                            <constraint firstItem="CdC-Ug-fc2" firstAttribute="top" secondItem="2Dd-Xo-Zqz" secondAttribute="bottom" constant="8" id="oIc-4X-UbI"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="CAi-uB-VlY"/>
                     </view>
                     <connections>
-                        <outlet property="alertLabel" destination="DNm-wO-n92" id="7Mt-9p-oDj"/>
                         <outlet property="inequalityAlertPicker" destination="P6N-Jy-263" id="drJ-4i-7Iw"/>
                         <outlet property="setAlertButton" destination="CdC-Ug-fc2" id="hia-8s-VrW"/>
                         <outlet property="titleLabel" destination="Z2U-oN-etq" id="zua-eG-TQM"/>
@@ -314,7 +317,7 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Lcy-sc-7L2">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Lcy-sc-7L2">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lcy-sc-7L2" id="9ZT-fp-6Yv">
@@ -333,7 +336,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zF4-7y-qLb">
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="zF4-7y-qLb">
                                 <rect key="frame" x="0.0" y="64" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -341,6 +344,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6Am-c8-eyn" firstAttribute="trailing" secondItem="RnK-NB-6yT" secondAttribute="trailing" id="9S6-Pb-ZXy"/>
+                            <constraint firstItem="zF4-7y-qLb" firstAttribute="top" secondItem="RnK-NB-6yT" secondAttribute="top" id="Jtm-af-gdu"/>
                             <constraint firstItem="zF4-7y-qLb" firstAttribute="trailing" secondItem="RnK-NB-6yT" secondAttribute="trailing" id="Wl7-dD-bDe"/>
                             <constraint firstItem="6Am-c8-eyn" firstAttribute="leading" secondItem="RnK-NB-6yT" secondAttribute="leading" id="ul5-UZ-lpM"/>
                             <constraint firstItem="zF4-7y-qLb" firstAttribute="leading" secondItem="RnK-NB-6yT" secondAttribute="leading" id="y9y-6C-6Pf"/>
@@ -426,7 +430,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="67" id="o2r-AI-28V">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="67" id="o2r-AI-28V">
                                         <rect key="frame" x="0.0" y="28" width="375" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="o2r-AI-28V" id="TsQ-Jy-CbY">
