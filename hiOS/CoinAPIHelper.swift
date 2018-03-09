@@ -103,6 +103,24 @@ class CryptoRepo {
     }
     
     /**
+     Gets an `Array` of `Strings` that is the key list of cryptoList
+     
+     - Returns: An `Array` containing the `Cryptocurrency` elements in the list
+     */
+    func getKeysList() -> [String] {
+        return Array(cryptoList.keys)
+    }
+    
+    /**
+     Gets an `Int` that is the length of cryptoList
+     
+     - Returns: An `Int` that is the length of cryptoList
+     */
+    func getCount() -> Int {
+        return cryptoList.count
+    }
+    
+    /**
      Preserves the order of insertion
      
      - Parameter name: Name of `Cryptocurrency` to preserve order of
