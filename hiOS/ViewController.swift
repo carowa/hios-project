@@ -32,7 +32,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // FIXME: Remove example loading when unneeded
         let c = CoinAPIHelper()
         c.update() {
-            print("Download Finished Here!!")
+            self.cryptoList = self.cryptoRepo.getCryptoList()
+            // Access the main thread to update UI elements
+            DispatchQueue.main.async() {
+                self.favoritesTableView.reloadData()
+            }
         }
     }
 

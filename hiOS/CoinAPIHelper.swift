@@ -80,7 +80,7 @@ extension Cryptocurrency: Decodable {
 class CryptoRepo {
     static let shared = CryptoRepo()
     
-    private var order: [String] = []
+    private var orderedCryptoList: [Cryptocurrency] = []
     private var cryptoList: [String: Cryptocurrency] = [:]
     
     /**
@@ -88,7 +88,8 @@ class CryptoRepo {
      
      - Parameter element: `Cryptocurrency` element to add to list
     */
-    func add(element : Cryptocurrency) {
+    func add(element: Cryptocurrency) {
+        trackOrder(element: element)
         let key : String = element.id
         cryptoList[key] = element
     }
@@ -99,16 +100,23 @@ class CryptoRepo {
      - Returns: An `Array` containing the `Cryptocurrency` elements in the list
     */
     func getCryptoList() -> [Cryptocurrency] {
-        return Array(cryptoList.values)
+        return orderedCryptoList
     }
     
     /**
-     Preserves the order of insertion
+     Preserves the order of insertion according to the order returned in the JSON
      
-     - Parameter name: Name of `Cryptocurrency` to preserve order of
+     - Parameter name: `Cryptocurrency` to preserve order of
     */
-    func trackOrder(name : String) {
-        order.append(name)
+    private func trackOrder(element: Cryptocurrency) {
+        orderedCryptoList.append(element)
+    }
+    
+    /*
+     
+    */
+    func getElemById(id : String) -> Cryptocurrency {
+        return cryptoList[id]!
     }
 }
 
@@ -206,7 +214,6 @@ class CoinAPIHelper: NSObject {
             let cryptoRepo = CryptoRepo.shared
             for e in cryptoArray {
                 cryptoRepo.add(element: e)
-                cryptoRepo.trackOrder(name: e.id)
             }
         } catch (let writeError) {
             print("Error reading/writing from file in CoinAPIHelper: \(writeError)")
