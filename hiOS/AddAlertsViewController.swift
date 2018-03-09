@@ -47,8 +47,12 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         if alertType != "" && inequality != "" && valueTextField.text != "" {
             // delete this
             alertLabel.text = alertType + inequality + valueTextField.text!
+            /* TODO: add alert object to array
+            
+            */
             alerts.addAlert(id: self.id, alertType: self.alertType, ineq: self.inequality,
                             value: Int(valueTextField.text!)!, price: (currency?.priceUSD)!)
+            performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
     }
     
@@ -93,9 +97,10 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetailSegue" {
-            let detailedController = segue.destination as! DetailedViewController
-            detailedController.currency = currency
+        if segue.identifier == "showAllAlertsSegue" {
+            let allAlertsController = segue.destination as! AlertsViewController
+            allAlertsController.currency = currency
+            allAlertsController.addedAlert = true
         }
     }
 

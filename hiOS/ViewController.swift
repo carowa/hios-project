@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var addedAlert:Bool = false
     let cryptoRepo = CryptoRepo.shared
     var cryptoList:[Cryptocurrency] = []
     var refresher:UIRefreshControl = UIRefreshControl()
@@ -18,6 +19,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if addedAlert {
+            navigationItem.hidesBackButton = true
+        }
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
         
