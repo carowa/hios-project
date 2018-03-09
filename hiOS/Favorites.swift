@@ -9,16 +9,16 @@
 import Foundation
 
 /// Singleton object to store user's favorite cryptocurrencies
-class FavoritesRepo {
-    static let shared = FavoritesRepo()
+class Favorites {
+    static let shared = Favorites()
     
     private var list : [String] = []
     let cryptoRepo = CryptoRepo.shared
     
     /**
-     Adds a new element to FavoritesRepo
+     Adds a new element to Favorites
      
-     - Parameter name: Name of favorite cryptocurrency to add
+     - Parameter name: Name of cryptocurrency to add to favorites list
     */
     func add(name : String) {
         // FIXME: Add a contains method in CryptoRepo and make sure that such a cryptocurrency exists
@@ -26,7 +26,17 @@ class FavoritesRepo {
     }
     
     /**
-     Removes an element from FavoritesRepo
+     Checks whether a currency is already in Favorites
+     
+     - Parameter name: Name of cryptocurrency to check in favorites list
+     - Returns: boolean if currency is in favorites. True if yes, False if no.
+     */
+    func contains(name:String) -> Bool {
+        return findItem(name: name) > -1 ? true : false
+    }
+    
+    /**
+     Removes an element from Favorites
      
      - Parameter name: Name of favorite cryptocurrency to remove
     */
