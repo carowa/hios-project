@@ -432,7 +432,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="67" id="o2r-AI-28V">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alertsViewTableCell" rowHeight="67" id="o2r-AI-28V" customClass="AlertsTableViewCell" customModule="hiOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="o2r-AI-28V" id="TsQ-Jy-CbY">
@@ -455,6 +455,11 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="alertTypeLabel" destination="qBy-ZC-JxB" id="IJX-Ot-3ry"/>
+                                            <outlet property="cellView" destination="TsQ-Jy-CbY" id="kH9-FQ-OY0"/>
+                                            <outlet property="identifierLabel" destination="nkM-JU-RDV" id="GjC-4d-nvK"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -468,6 +473,7 @@
                         <viewLayoutGuide key="safeArea" id="poD-5b-hCl"/>
                     </view>
                     <connections>
+                        <outlet property="alertsTableView" destination="Cnw-NU-RTT" id="uTd-qI-OVX"/>
                         <segue destination="AY1-m6-6rz" kind="show" identifier="showDetailSegue" id="dcc-td-J8E"/>
                     </connections>
                 </viewController>
