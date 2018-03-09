@@ -18,7 +18,6 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var inequalityAlertPicker: UIPickerView!
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var setAlertButton: UIButton!
-    @IBOutlet weak var alertLabel: UILabel!
     
     var alertType:String = ""
     var inequality:String = ""
@@ -45,8 +44,6 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     @IBAction func setAlert(_ sender: UIButton) {
         if alertType != "" && inequality != "" && valueTextField.text != "" {
-            // delete this
-            alertLabel.text = alertType + inequality + valueTextField.text!
             /* TODO: add alert object to array
             
             */
