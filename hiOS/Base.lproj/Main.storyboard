@@ -172,6 +172,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4LD-4Z-cKU">
                                 <rect key="frame" x="16" y="617" width="111" height="30"/>
                                 <state key="normal" title="Add to Favorites"/>
+                                <connections>
+                                    <action selector="favoritesActionButton:" destination="AY1-m6-6rz" eventType="touchUpInside" id="uSd-r1-6PX"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iF9-25-Q2a" userLabel="Name Label">
                                 <rect key="frame" x="165" y="59" width="45" height="20.5"/>
@@ -231,6 +234,7 @@
                     </view>
                     <connections>
                         <outlet property="currentPriceLabel" destination="Xkp-Jp-YAi" id="LjJ-BV-f2C"/>
+                        <outlet property="favoritesActionButton" destination="4LD-4Z-cKU" id="1UJ-ot-J7u"/>
                         <outlet property="idLabel" destination="uI5-eS-Jrb" id="hLR-E5-TtB"/>
                         <outlet property="percentChangeLabel" destination="RLx-gJ-r0g" id="Xgv-g3-GD5"/>
                         <outlet property="titleLabel" destination="iF9-25-Q2a" id="YHw-si-dXc"/>
