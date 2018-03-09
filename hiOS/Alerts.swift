@@ -14,8 +14,12 @@ class Alert {
     private var id : String
     
     // creates an empty alert object
-    init(id : String) {
+    init(id : String, alertType: String, ineq: String, value: Int, price : Double) {
         self.id = id
+        self.alertType = alertType
+        self.inequality = ineq
+        self.value = value
+        self.currPrice = price
     }
     
     
@@ -135,11 +139,7 @@ class Alerts: NSObject {
      - Parameter price: price of the cryptocurrency when the alert was set
     */
     func addAlert(id: String, alertType: String, ineq: String, value: Int, price : Double) {
-        let alert = Alert(id: id)
-        alert.setAlertType(type: alertType)
-        alert.setInequality(ineq: ineq)
-        alert.setAlertValue(input: value)
-        alert.setCurrPrice(input: price)
+        let alert = Alert(id: id, alertType: alertType, ineq: ineq, value: value, price: price)
         alertsRepo[alert.getId()] = alert
     }
     
