@@ -13,6 +13,7 @@ class FavoritesRepo {
     static let shared = FavoritesRepo()
     
     private var list : [String] = []
+    let cryptoRepo = CryptoRepo.shared
     
     /**
      Adds a new element to FavoritesRepo
@@ -20,6 +21,7 @@ class FavoritesRepo {
      - Parameter name: Name of favorite cryptocurrency to add
     */
     func add(name : String) {
+        // FIXME: Add a contains method in CryptoRepo and make sure that such a cryptocurrency exists
         list.append(name)
     }
     
@@ -30,8 +32,9 @@ class FavoritesRepo {
     */
     func remove(name : String) {
         let index = findItem(name: name)
-        // FIXME: This will crash if findItem returns -1.
-        list.remove(at: index)
+        if (index != -1) {
+            list.remove(at: index)
+        }
     }
     
     /**

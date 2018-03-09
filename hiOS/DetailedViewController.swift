@@ -50,8 +50,7 @@ class DetailedViewController: UIViewController {
         if(segue.identifier == "showAddAlertSegue") {
             let addAlertController = segue.destination as! AddAlertsViewController
             addAlertController.currency = currency
+            addAlertController.id = (currency?.id)!
         }
     }
-
-
 }
