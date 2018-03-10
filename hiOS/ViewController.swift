@@ -15,7 +15,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var refresher:UIRefreshControl = UIRefreshControl()
     private var myFavoritesIndex:Int = 0
     
+    var favorites = Favorites.shared
+    
     @IBOutlet weak var favoritesTableView: UITableView!
+    
+    let sections = ["Favorites", "Popular Cryptocurrencies"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +50,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.sections.count
+    }
+    
+    func tableView(_: UITableView, titleForHeaderInSection: Int) -> String? {
+        return self.sections[titleForHeaderInSection]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            // return 1 when favorites is empty
+            return max(1, favorites.size())
+        }
         return cryptoList.count
     }
     
@@ -58,12 +70,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
-        let id = cryptoList[indexPath.row].name //+ " - " + cryptoList[indexPath.row].id
-        cell.identifierLabel?.text = id
-        cell.priceLabel?.text = String(cryptoList[indexPath.row].priceUSD)
-        
+        var label : String = ""
+        var price : String = ""
+        switch indexPath.section {
+            case 0:
+                let list = favorites.getList()
+                if (list.count > 0) {
+                    let id = list[indexPath.row]
+                    label = cryptoRepo.getElemById(id: id).id
+                    price = String(cryptoRepo.getElemById(id: id).priceUSD)
+                } else {
+                    label = "There's nothing to show here"
+                }
+            case 1:
+                label = cryptoList[indexPath.row].name
+                price = String(cryptoList[indexPath.row].priceUSD)
+            default:
+                break
+        }
+        cell.identifierLabel?.text = label
+        cell.priceLabel?.text = price
         return cell
     }
     
