@@ -67,7 +67,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         } else if pickerView == inequalityAlertPicker {
             return inequalityArray.count
         }
-        return 0
+        return 0 
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

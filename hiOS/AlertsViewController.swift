@@ -54,7 +54,7 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let currAlert = alerts[indexPath.row]
         let id = currAlert.getId()
         cell.identifierLabel?.text = id
-        let alertString = currAlert.getAlertType() + currAlert.getInequality() + String(currAlert.getAlertValue())
+        let alertString = "\(currAlert.getAlertType()) \(currAlert.getInequality()) \(String(currAlert.getAlertValue()))"
         cell.alertTypeLabel?.text = alertString
         return cell
     }
