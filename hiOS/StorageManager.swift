@@ -34,36 +34,45 @@ class StorageManager {
     /**
      Inserts a favorite item into the persistent container.
      
-     - Parameter favorite: `FavoriteItem` to insert to persistent container
+     - Parameter favoriteWithName: Name of a `FavoriteItem` to insert to persistent container
     */
-    func insert(favorite: FavoriteItem) {
-        backgroundContext.insert(favorite)
+    func insert(favoriteWithName: String) {
+        guard let favItem = NSEntityDescription.insertNewObject(forEntityName: "FavoriteItem", into: backgroundContext) as? FavoriteItem else { return }
+        favItem.name = favoriteWithName
+        backgroundContext.insert(favItem)
     }
     
     /**
-     Checks if the persistent container contains the specified favorite item
+     Checks if the persistent container contains the specified favorite name
      
-     - Parameter favorite: `FavoriteItem` to check
+     - Parameter favoriteWithName: Favorite name to check
      - Returns: true if the persistent container contains the favorite item, false otherwise
     */
-    func contains(favorite: FavoriteItem) -> Bool {
-        guard let _ = try? backgroundContext.existingObject(with: favorite.objectID) else {
+    func contains(favoriteWithName: String) -> Bool {
+        let favFetch = NSFetchRequest<FavoriteItem>(entityName: "FavoriteItem")
+        favFetch.predicate = NSPredicate(format: "name == %@", favoriteWithName)
+        let result = try? backgroundContext.fetch(favFetch)
+        guard let resultCount: Int = result?.count else {
             return false
         }
-        return true
+        return resultCount > 0
     }
     
     /**
      Removes a favorite item
      
-     - Parameter favorite: `FavoriteItem` to remove
+     - Parameter favoriteWithName: Name of `FavoriteItem` to remove
     */
-    func remove(favorite: FavoriteItem) {
+    func remove(favoriteWithName: String) {
         // Check object existence first
-        if contains(favorite: favorite) {
-            // Grab and delete object
-            let obj = backgroundContext.object(with: favorite.objectID)
-            backgroundContext.delete(obj)
+        let favFetch = NSFetchRequest<FavoriteItem>(entityName: "FavoriteItem")
+        favFetch.predicate = NSPredicate(format: "name == %@", favoriteWithName)
+        let result = try? backgroundContext.fetch(favFetch)
+        guard let resultCount: Int = result?.count else {
+            return
+        }
+        if resultCount > 0 {
+            backgroundContext.delete(result![0])
         }
     }
     
@@ -74,7 +83,7 @@ class StorageManager {
     */
     func fetchAllFavorites() -> [FavoriteItem] {
         let request: NSFetchRequest<FavoriteItem> = FavoriteItem.fetchRequest()
-        let results = try? persistentContainer.viewContext.fetch(request)
+        let results = try? backgroundContext.fetch(request)
         return results ?? [FavoriteItem]()
     }
     
