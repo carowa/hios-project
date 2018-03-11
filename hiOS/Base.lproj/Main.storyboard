@@ -337,12 +337,15 @@
                                                     <rect key="frame" x="311" y="6" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Add"/>
+                                                    <connections>
+                                                        <action selector="toggleFavorite:" destination="Lcy-sc-7L2" eventType="touchUpInside" id="bPs-a4-NW2"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="addButton" destination="RXL-l0-IE8" id="Hpg-NH-P4f"/>
                                             <outlet property="currencyLabel" destination="kE9-SG-nAf" id="otB-l9-lPy"/>
+                                            <outlet property="favoriteButton" destination="RXL-l0-IE8" id="PI5-oR-2f7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -361,7 +364,7 @@
                         <viewLayoutGuide key="safeArea" id="RnK-NB-6yT"/>
                     </view>
                     <connections>
-                        <outlet property="searchBar" destination="zF4-7y-qLb" id="5u9-N3-qsH"/>
+                        <outlet property="searchBar" destination="zF4-7y-qLb" id="ACC-Zy-6vk"/>
                         <outlet property="searchDisplayController" destination="qy9-aI-T0z" id="woQ-nj-FyA"/>
                         <outlet property="tableView" destination="6Am-c8-eyn" id="D0n-2e-dXa"/>
                     </connections>

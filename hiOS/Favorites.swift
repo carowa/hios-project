@@ -35,6 +35,25 @@ class FavoritesRepo {
     }
     
     /**
+     Returns true if `name` is in list, otherwise returns false
+     
+     - Parameter name: Name of favorite cryptocurrency to check
+     */
+    func isInFavorites(name : String) -> Bool {
+        let index = findItem(name: name)
+        return index > -1
+    }
+    
+    /**
+     Returns true if `name` is in list, otherwise returns false
+     
+     - Parameter name: Name of favorite cryptocurrency to check
+     */
+    func getFavorites() -> [String] {
+        return list
+    }
+    
+    /**
      Helper function to find the index of an element
      
      - Parameter name: Name of the favorite cryptocurrency to find

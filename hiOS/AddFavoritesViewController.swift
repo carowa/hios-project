@@ -9,27 +9,33 @@
 import UIKit
 
 class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    let favoritesRepo = FavoritesRepo.shared
     
     let cryptoRepo = CryptoRepo.shared
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
     var searchActive: Bool = false
     var filtered: [String] = []
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("in searchBarTextDidBeginEditing")
         searchActive = true;
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print("in searchBarTextDidEndEditing")
         searchActive = false;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("in searchBarCancelButtonClicked")
         searchActive = false;
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("in searchBarSearchButtonClicked")
         searchActive = false;
     }
     
@@ -37,7 +43,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         if(searchActive) {
             return filtered.count
         }
-        print("cryptorepo count: \(cryptoRepo.getCount())")
+        //print("cryptorepo count: \(cryptoRepo.getCount())")
         return cryptoRepo.getCount()
     }
 
@@ -63,10 +69,9 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
 
         filtered = cryptoKeys.filter({ (text) -> Bool in
             let tmp: NSString = text as NSString
-            let range = tmp.range(of: searchText)
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
-
         if(filtered.count == 0){
             searchActive = false;
         } else {
@@ -77,17 +82,20 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cryptoKeys = cryptoRepo.getKeysList()
-        print("CryptoKeys: \(cryptoKeys)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
         
-//        if(searchActive){
-//            cell.currencyLabel.text = filtered[indexPath.row]
-//            print(filtered[indexPath.row])
-//        } else {
-//            cell.currencyLabel.text = cryptoKeys[indexPath.row];
-//        }
-        print("lets partyyyy")
-        cell.currencyLabel.text = cryptoKeys[indexPath.row];
+        print("this is favorites on 87: \(favoritesRepo.getFavorites())")
+        if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
+            cell.favoriteButton.setTitle("\u{2705}", for: .normal)
+        } else {
+            cell.favoriteButton.setTitle("Add", for: .normal)
+        }
+        
+        if(searchActive){
+            cell.currencyLabel.text = filtered[indexPath.row]
+        } else {
+            cell.currencyLabel.text = cryptoKeys[indexPath.row];
+        }
         return cell;
     }
     
