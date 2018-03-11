@@ -76,7 +76,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             case 0:
                 let list = favorites.getList()
                 if (list.count > 0) {
-                    let id = list[indexPath.row]
+                    guard let id = list[indexPath.row].name else {
+                        return cell
+                    }
                     label = cryptoRepo.getElemById(id: id).name
                     price = String(cryptoRepo.getElemById(id: id).priceUSD)
                 } else {

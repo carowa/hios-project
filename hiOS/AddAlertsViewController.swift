@@ -44,12 +44,6 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     @IBAction func setAlert(_ sender: UIButton) {
         if alertTypeString != "" && inequality != "" && valueTextField.text != "" {
-            // delete this
-            alertLabel.text = alertTypeString + inequality + valueTextField.text!
-            /* TODO: add alert object to array
-            
-            */
-
             // Get index value inside of alertType
             guard let alertIndex = self.alertTypeArray.index(of: alertTypeString) else {
                 print("Something went wrong grabbing ArrayIndex in AddAlertsViewController")
