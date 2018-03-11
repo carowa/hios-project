@@ -30,7 +30,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         favoritesTableView.dataSource = self
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: #selector(ViewController.populate), for: UIControlEvents.valueChanged)
         favoritesTableView.addSubview(refresher)
         
         // FIXME: Remove example loading when unneeded
@@ -78,9 +77,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let list = favorites.getList()
                 if (list.count > 0) {
                     let id = list[indexPath.row]
-                    label = cryptoRepo.getElemById(id: id).id
+                    label = cryptoRepo.getElemById(id: id).name
                     price = String(cryptoRepo.getElemById(id: id).priceUSD)
                 } else {
+                    // when favorites is empty
                     label = "There's nothing to show here"
                 }
             case 1:
@@ -101,18 +101,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // TODO: Remove populate option from the main table view later
-    @IBAction func populate(_ sender: UIButton) {
-        cryptoList = cryptoRepo.getCryptoList()
-        favoritesTableView.reloadData()
-        refresher.endRefreshing()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "showDetailSegue") {
             let detailedController = segue.destination as! DetailedViewController
             detailedController.currency = cryptoList[myFavoritesIndex]
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // reload favorties table view data source after a segue
+        favoritesTableView.reloadData()
     }
 }
 
