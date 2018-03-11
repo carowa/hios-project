@@ -37,8 +37,10 @@ class StorageManager {
      - Parameter favoriteWithName: Name of a `FavoriteItem` to insert to persistent container
     */
     func insert(favoriteWithName: String) {
+        // Create a new FavoriteItem and grab a ref to it to edit
         guard let favItem = NSEntityDescription.insertNewObject(forEntityName: "FavoriteItem", into: backgroundContext) as? FavoriteItem else { return }
         favItem.name = favoriteWithName
+        // Insert to our persistent container
         backgroundContext.insert(favItem)
     }
     
@@ -49,9 +51,12 @@ class StorageManager {
      - Returns: true if the persistent container contains the favorite item, false otherwise
     */
     func contains(favoriteWithName: String) -> Bool {
+        // Create a fetch request with a filter to search for given name
         let favFetch = NSFetchRequest<FavoriteItem>(entityName: "FavoriteItem")
         favFetch.predicate = NSPredicate(format: "name == %@", favoriteWithName)
+        // Attempt to fetch the FavoriteItem from the persistent container
         let result = try? backgroundContext.fetch(favFetch)
+        // The result will be an error or an Array of FavoriteItems
         guard let resultCount: Int = result?.count else {
             return false
         }
@@ -64,13 +69,14 @@ class StorageManager {
      - Parameter favoriteWithName: Name of `FavoriteItem` to remove
     */
     func remove(favoriteWithName: String) {
-        // Check object existence first
+        // Check object existence first with a name filter
         let favFetch = NSFetchRequest<FavoriteItem>(entityName: "FavoriteItem")
         favFetch.predicate = NSPredicate(format: "name == %@", favoriteWithName)
         let result = try? backgroundContext.fetch(favFetch)
         guard let resultCount: Int = result?.count else {
             return
         }
+        // Remove it if it exists
         if resultCount > 0 {
             backgroundContext.delete(result![0])
         }

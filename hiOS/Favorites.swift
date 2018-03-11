@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-/// Singleton object to store user's favorite cryptocurrencies
+/// Wrapper on top of StorageManager to store user's favorite cryptocurrencies
 class Favorites {
     static let shared = Favorites()
         
