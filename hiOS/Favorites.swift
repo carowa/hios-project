@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 /// Singleton object to store user's favorite cryptocurrencies
 class Favorites {
