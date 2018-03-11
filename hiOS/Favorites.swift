@@ -48,6 +48,34 @@ class Favorites {
     }
     
     /**
+     Gets the size of favorites list
+     
+     - Returns: An Int representing the size of favorites list
+    */
+    func size() -> Int {
+        return self.list.count
+    }
+    
+    /**
+     Gets the list of user's favorite cryptocurrencies
+     
+     - Returns: An array of Strings with ids of cryptocurrencies
+    */
+    func getList() -> [String] {
+        return self.list
+    }
+    
+    /**
+     Gets the crypto currency object with the given id
+     
+     - Parameter id: A String representing the id of a cryptocurrency
+     - Returns: A Cryptocurrency object
+    */
+    func getElemById(id : String) -> Cryptocurrency {
+        return cryptoRepo.getElemById(id: id)
+    }
+    
+    /**
      Helper function to find the index of an element
      
      - Parameter name: Name of the favorite cryptocurrency to find
