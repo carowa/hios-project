@@ -9,14 +9,13 @@
 import Foundation
 import UserNotifications
 
-/// Singleton object to store the different properties of an alert
+/// Object to store the different properties of an alert
 class Alert {
-    private var id : String
-    private var alertType : AlertType = .none
-    private var currPrice : Double = 0.0
-    // default: no alert == ""
-    private var inequality : String = ""
-    private var value : Int = 0
+    private var id: String
+    private var alertType: AlertType = .none
+    private var currPrice: Double = 0.0
+    private var inequality: String = "" // default: no alert == ""
+    private var value: Int = 0
     
     /// Defines the types of Alerts available
     public enum AlertType: Int {
@@ -25,8 +24,8 @@ class Alert {
         case currencyValue = 2
     }
     
-    // creates an empty alert object
-    init(id : String, alertType: AlertType, ineq: String, value: Int, price : Double) {
+    /// Creates an `Alert` with the given parameters
+    init(id: String, alertType: AlertType, ineq: String, value: Int, price: Double) {
         self.id = id
         self.alertType = alertType
         self.inequality = ineq
@@ -48,7 +47,7 @@ class Alert {
      
      - Parameter ineq: is a `String` representing the bound on an alert
     */
-    func setInequality(ineq : String) {
+    func setInequality(ineq: String) {
         self.inequality = ineq
     }
 
@@ -91,7 +90,7 @@ class Alert {
     /**
      Gets the type of the alert on the cryptocurrency
      
-     - Returns: A `String` representing the type of alert on the cryptocurrency object
+     - Returns: An `AlertType` representing the type of alert on the cryptocurrency object
     */
     func getAlertType() -> AlertType {
         return self.alertType
@@ -120,9 +119,6 @@ class Alert {
 class Alerts: NSObject {
     static let shared = Alerts()
     
-    // key value mapping for alerts
-    private var alertsRepo : [String : Alert] = [:]
-    
     let cryptoRepo = CryptoRepo.shared
     
     /**
@@ -131,7 +127,7 @@ class Alerts: NSObject {
      - Returns: An array of `Alert` objects
     */
     func getAlerts() -> [Alert] {
-        return Array(alertsRepo.values)
+        return []
     }
     
     /**
@@ -145,19 +141,19 @@ class Alerts: NSObject {
     */
     func addAlert(id: String, alertType: Alert.AlertType, ineq: String, value: Int, price : Double) {
         let alert = Alert(id: id, alertType: alertType, ineq: ineq, value: value, price: price)
-        alertsRepo[alert.getId()] = alert
+        StorageManager.shared.insert(alert: alert)
     }
     
     /**
      Checks the status of the alerts and sends notifications accordingly
     */
     func checkStatus() {
-        for alert in alertsRepo {
-            let change : Int = alert.value.getAlertValue()
-            let price : Double = alert.value.getCurrPrice()
-            let ineq : String = alert.value.getInequality()
-            let type : Alert.AlertType = alert.value.getAlertType()
-            let id : String = alert.value.getId()
+        for alertItem in StorageManager.shared.fetchAllAlerts() {
+            let change : Int = Int(alertItem.alertValue)
+            let price : Double = alertItem.currentPrice
+            let ineq : String = alertItem.inequality!
+            let type : Alert.AlertType = Alert.AlertType(rawValue: Int(alertItem.alertType))!
+            let id : String = alertItem.currencyId!
             
             let updatedVal = cryptoRepo.getElemById(id: id)
             

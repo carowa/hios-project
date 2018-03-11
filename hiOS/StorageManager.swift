@@ -45,6 +45,23 @@ class StorageManager {
     }
     
     /**
+     Inserts an alert item into the persistent container.
+     
+     - Parameter alert: `Alert` to insert to persistent container
+     */
+    func insert(alert: Alert) {
+        // Create a new AlertItem and grab a ref to it to edit
+        guard let alertItem = NSEntityDescription.insertNewObject(forEntityName: "AlertItem", into: backgroundContext) as? AlertItem else { return }
+        alertItem.currencyId = alert.getId()
+        alertItem.alertType = Int16(alert.getAlertType().rawValue)
+        alertItem.inequality = alert.getInequality()
+        alertItem.alertValue = Int64(alert.getAlertValue())
+        alertItem.currentPrice = alert.getCurrPrice()
+        // Insert to our persistent container
+        backgroundContext.insert(alertItem)
+    }
+    
+    /**
      Checks if the persistent container contains the specified favorite name
      
      - Parameter favoriteWithName: Favorite name to check
@@ -91,6 +108,17 @@ class StorageManager {
         let request: NSFetchRequest<FavoriteItem> = FavoriteItem.fetchRequest()
         let results = try? backgroundContext.fetch(request)
         return results ?? [FavoriteItem]()
+    }
+    
+    /**
+     Gets all added alerts from the persistent container.
+     
+     - Returns: Array of `AlertItem`s contained in the persistent container.
+     */
+    func fetchAllAlerts() -> [AlertItem] {
+        let request: NSFetchRequest<AlertItem> = AlertItem.fetchRequest()
+        let results = try? backgroundContext.fetch(request)
+        return results ?? [AlertItem]()
     }
     
     /**
