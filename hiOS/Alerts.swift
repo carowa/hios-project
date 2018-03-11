@@ -12,7 +12,7 @@ import UserNotifications
 /// Object to store the different properties of an alert
 class Alert {
     private var id: String
-    private var alertType: AlertType = .none
+    public var alertType: AlertType = .none
     private var currPrice: Double = 0.0
     private var inequality: String = "" // default: no alert == ""
     private var value: Int = 0

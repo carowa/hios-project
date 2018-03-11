@@ -12,7 +12,7 @@ import CoreData
 
 /// Manages storing persistent data
 class StorageManager {
-    // Shared object
+    /// Shared object
     static let shared = StorageManager()
     // Encapsulation of the Core Data stack
     private let persistentContainer: NSPersistentContainer!
@@ -81,6 +81,31 @@ class StorageManager {
     }
     
     /**
+     Checks if the persistent container contains the specified alert
+     
+     - Parameter alert: `Alert` to check
+     - Returns: true if the persistent container contains the alert, false otherwise
+     */
+    func contains(alert: Alert) -> Bool {
+        // Create a fetch request with a filter to search for given name
+        let alertFetch = NSFetchRequest<AlertItem>(entityName: "AlertItem")
+        let currencyIdPredicate = NSPredicate(format: "currencyId == %@", alert.getId())
+        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Int64(alert.getAlertValue()))
+        let alertInequalityPredicate = NSPredicate(format: "inequality == %@", alert.getInequality())
+        let currentPricePredicate = NSPredicate(format: "currentPrice == %lf", alert.getCurrPrice())
+        let alertTypePredicate = NSPredicate(format: "alertType == %d", Int16(alert.getAlertType().rawValue))
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [currencyIdPredicate, alertValuePredicate, alertInequalityPredicate, currentPricePredicate, alertTypePredicate])
+        alertFetch.predicate = andPredicate
+        // Attempt to fetch the FavoriteItem from the persistent container
+        let result = try? backgroundContext.fetch(alertFetch)
+        // The result will be an error or an Array of FavoriteItems
+        guard let resultCount: Int = result?.count else {
+            return false
+        }
+        return resultCount > 0
+    }
+    
+    /**
      Removes a favorite item
      
      - Parameter favoriteWithName: Name of `FavoriteItem` to remove
@@ -100,9 +125,36 @@ class StorageManager {
     }
     
     /**
+     Removes an Alert
+     
+     - Parameter alert: `Alert` to remove
+     */
+    func remove(alert: Alert) {
+        // Create a fetch request with a filter to search for given name
+        let alertFetch = NSFetchRequest<AlertItem>(entityName: "AlertItem")
+        let currencyIdPredicate = NSPredicate(format: "currencyId == %@", alert.getId())
+        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Int64(alert.getAlertValue()))
+        let alertInequalityPredicate = NSPredicate(format: "inequality == %@", alert.getInequality())
+        let currentPricePredicate = NSPredicate(format: "currentPrice == %lf", alert.getCurrPrice())
+        let alertTypePredicate = NSPredicate(format: "alertType == %d", Int16(alert.getAlertType().rawValue))
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [currencyIdPredicate, alertValuePredicate, alertInequalityPredicate, currentPricePredicate, alertTypePredicate])
+        alertFetch.predicate = andPredicate
+        // Attempt to fetch the FavoriteItem from the persistent container
+        let result = try? backgroundContext.fetch(alertFetch)
+        // The result will be an error or an Array of FavoriteItems
+        guard let resultCount: Int = result?.count else {
+            return
+        }
+        // Remove it if it exists
+        if resultCount > 0 {
+            backgroundContext.delete(result![0])
+        }
+    }
+    
+    /**
      Gets all added favorites from the persistent container.
      
-     - Returns: Array of `FavoriteItems` contained in the persistent container.
+     - Returns: Array of `FavoriteItem`s contained in the persistent container.
     */
     func fetchAllFavorites() -> [FavoriteItem] {
         let request: NSFetchRequest<FavoriteItem> = FavoriteItem.fetchRequest()
