@@ -70,14 +70,6 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xqz-Ac-kI0">
-                                        <rect key="frame" x="164" y="0.0" width="63" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Populate"/>
-                                        <connections>
-                                            <action selector="populate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="edn-jw-jIY"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -518,7 +510,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="RrD-Ec-AZT"/>
-        <segue reference="dcc-td-J8E"/>
+        <segue reference="JIR-1J-r2i"/>
         <segue reference="fbl-ni-s5o"/>
     </inferredMetricsTieBreakers>
 </document>

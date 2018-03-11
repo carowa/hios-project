@@ -19,7 +19,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var setAlertButton: UIButton!
     
-    var alertType:String = ""
+    var alertTypeString:String = ""
     var inequality:String = ""
     
     var alertTypeArray:[String] = ["", "Percent Value", "Currency Value"]
@@ -43,11 +43,24 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     @IBAction func setAlert(_ sender: UIButton) {
-        if alertType != "" && inequality != "" && valueTextField.text != "" {
+        if alertTypeString != "" && inequality != "" && valueTextField.text != "" {
+            // delete this
+            alertLabel.text = alertTypeString + inequality + valueTextField.text!
             /* TODO: add alert object to array
             
             */
-            alerts.addAlert(id: self.id, alertType: self.alertType, ineq: self.inequality,
+
+            // Get index value inside of alertType
+            guard let alertIndex = self.alertTypeArray.index(of: alertTypeString) else {
+                print("Something went wrong grabbing ArrayIndex in AddAlertsViewController")
+                return
+            }
+            // Get actual Alert.AlertType. AlertType(0) = .none, AlertType(1) = .percentValue, AlertType(2) = .currencyValue
+            guard let alertType = Alert.AlertType(rawValue: alertIndex) else {
+                print("Something went wrong creating Alert.AlertType AddAlertsViewController")
+                return
+            }
+            alerts.addAlert(id: self.id, alertType: alertType, ineq: self.inequality,
                             value: Int(valueTextField.text!)!, price: (currency?.priceUSD)!)
             performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
@@ -81,7 +94,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if(pickerView == typeOfAlertPicker) {
-            alertType = alertTypeArray[row]
+            alertTypeString = alertTypeArray[row]
         } else {
             inequality = inequalityArray[row]
         }
