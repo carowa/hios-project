@@ -18,7 +18,6 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var inequalityAlertPicker: UIPickerView!
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var setAlertButton: UIButton!
-    @IBOutlet weak var alertLabel: UILabel!
     
     var alertTypeString:String = ""
     var inequality:String = ""
@@ -81,7 +80,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         } else if pickerView == inequalityAlertPicker {
             return inequalityArray.count
         }
-        return 0
+        return 0 
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
