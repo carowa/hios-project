@@ -15,7 +15,7 @@ class Alert {
     public var alertType: AlertType = .none
     private var currPrice: Double = 0.0
     private var inequality: String = "" // default: no alert == ""
-    private var value: Int = 0
+    private var value: Double = 0
     
     /// Defines the types of Alerts available
     public enum AlertType: Int {
@@ -25,7 +25,7 @@ class Alert {
     }
     
     /// Creates an `Alert` with the given parameters
-    init(id: String, alertType: AlertType, ineq: String, value: Int, price: Double) {
+    init(id: String, alertType: AlertType, ineq: String, value: Double, price: Double) {
         self.id = id
         self.alertType = alertType
         self.inequality = ineq
@@ -74,7 +74,7 @@ class Alert {
      
      - Parameter input: is the value to which the constraint is applied to
     */
-    func setAlertValue(input: Int) {
+    func setAlertValue(input: Double) {
         self.value = input
     }
     
@@ -83,7 +83,7 @@ class Alert {
      
      - Returns: an Int representing the bound on alert's change
     */
-    func getAlertValue() -> Int {
+    func getAlertValue() -> Double {
         return self.value
     }
     
@@ -139,7 +139,7 @@ class Alerts: NSObject {
      - Parameter value: the bound set by user
      - Parameter price: price of the cryptocurrency when the alert was set
     */
-    func addAlert(id: String, alertType: Alert.AlertType, ineq: String, value: Int, price : Double) {
+    func addAlert(id: String, alertType: Alert.AlertType, ineq: String, value: Double, price : Double) {
         let alert = Alert(id: id, alertType: alertType, ineq: ineq, value: value, price: price)
         StorageManager.shared.insert(alert: alert)
     }
@@ -149,7 +149,7 @@ class Alerts: NSObject {
     */
     func checkStatus() {
         for alertItem in StorageManager.shared.fetchAllAlerts() {
-            let change : Int = Int(alertItem.alertValue)
+            let change : Double = Double(alertItem.alertValue)
             let price : Double = alertItem.currentPrice
             let ineq : String = alertItem.inequality!
             let type : Alert.AlertType = Alert.AlertType(rawValue: Int(alertItem.alertType))!
@@ -179,7 +179,7 @@ class Alerts: NSObject {
      - Parameter ineq: the inequality specified by the user
      - Returns: A boolean indicating whether there was a specified amount of change
     */
-    private func priceChange(newVal : Double, change : Int, ineq : String) -> Bool {
+    private func priceChange(newVal : Double, change : Double, ineq : String) -> Bool {
         switch (ineq) {
         case "=":
             return abs(newVal - Double(change)) < 1.0
@@ -202,7 +202,7 @@ class Alerts: NSObject {
      - Parameter ineq: inequality specified by the user
      - Returns: A boolean indicating whether there was a specified amount of price change
     */
-    private func pctChange(oldVal : Double, newVal : Double, change : Int, ineq : String) -> Bool {
+    private func pctChange(oldVal : Double, newVal : Double, change : Double, ineq : String) -> Bool {
         let pctDecrease : Double = ((oldVal - newVal) / oldVal) * 100
         let pctIncrease : Double = ((newVal - oldVal) / oldVal) * 100
         switch (ineq) {

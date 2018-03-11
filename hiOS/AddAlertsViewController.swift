@@ -34,7 +34,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         inequalityAlertPicker.delegate = self
         inequalityAlertPicker.dataSource = self
         valueTextField.delegate = self
-        valueTextField.keyboardType = UIKeyboardType.asciiCapableNumberPad
+        valueTextField.keyboardType = UIKeyboardType.decimalPad
         titleLabel.text = "Set New Alert for \(currency?.name ?? "nil")"
     }
 
@@ -62,7 +62,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
                 return
             }
             alerts.addAlert(id: self.id, alertType: alertType, ineq: self.inequality,
-                            value: Int(valueTextField.text!)!, price: (currency?.priceUSD)!)
+                            value: Double(valueTextField.text!)!, price: (currency?.priceUSD)!)
             performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
     }
@@ -102,9 +102,18 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
+//        print(textField.text)
+//        let allowedCharacters = CharacterSet.decimalDigits
+//        let characterSet = CharacterSet(charactersIn: string)
+//        return allowedCharacters.isSuperset(of: characterSet)
+        let textFieldString = textField.text! as NSString;
+        let newString = textFieldString.replacingCharacters(in: range, with:string)
+        let floatRegEx = "^([0-9]+)?(\\.([0-9]+)?)?$"
+        
+        let floatExPredicate = NSPredicate(format:"SELF MATCHES %@", floatRegEx)
+        
+        return floatExPredicate.evaluate(with: newString)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
