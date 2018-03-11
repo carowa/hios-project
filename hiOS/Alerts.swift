@@ -12,22 +12,27 @@ import UserNotifications
 /// Singleton object to store the different properties of an alert
 class Alert {
     private var id : String
+    private var alertType : AlertType = .none
+    private var currPrice : Double = 0.0
+    // default: no alert == ""
+    private var inequality : String = ""
+    private var value : Int = 0
+    
+    /// Defines the types of Alerts available
+    public enum AlertType: Int {
+        case none = 0
+        case percentValue = 1
+        case currencyValue = 2
+    }
     
     // creates an empty alert object
-    init(id : String, alertType: String, ineq: String, value: Int, price : Double) {
+    init(id : String, alertType: AlertType, ineq: String, value: Int, price : Double) {
         self.id = id
         self.alertType = alertType
         self.inequality = ineq
         self.value = value
         self.currPrice = price
     }
-    
-    
-    private var alertType : String = ""
-    private var currPrice : Double = 0.0
-    // default: no alert == ""
-    private var inequality : String = ""
-    private var value : Int = 0
     
     /**
      Gets the id of the alert object (id property of the cryptocurrency)
@@ -61,7 +66,7 @@ class Alert {
      
      - Parameter type: the type of constraint on the alert(either Percent value or Currency value)
     */
-    func setAlertType(type: String) {
+    func setAlertType(type: AlertType) {
         self.alertType = type
     }
     
@@ -88,7 +93,7 @@ class Alert {
      
      - Returns: A `String` representing the type of alert on the cryptocurrency object
     */
-    func getAlertType() -> String {
+    func getAlertType() -> AlertType {
         return self.alertType
     }
     
@@ -138,7 +143,7 @@ class Alerts: NSObject {
      - Parameter value: the bound set by user
      - Parameter price: price of the cryptocurrency when the alert was set
     */
-    func addAlert(id: String, alertType: String, ineq: String, value: Int, price : Double) {
+    func addAlert(id: String, alertType: Alert.AlertType, ineq: String, value: Int, price : Double) {
         let alert = Alert(id: id, alertType: alertType, ineq: ineq, value: value, price: price)
         alertsRepo[alert.getId()] = alert
     }
@@ -151,17 +156,17 @@ class Alerts: NSObject {
             let change : Int = alert.value.getAlertValue()
             let price : Double = alert.value.getCurrPrice()
             let ineq : String = alert.value.getInequality()
-            let type : String = alert.value.getAlertType()
+            let type : Alert.AlertType = alert.value.getAlertType()
             let id : String = alert.value.getId()
             
             let updatedVal = cryptoRepo.getElemById(id: id)
             
-            if type == "Percent Value" {
+            if type == .percentValue {
                 if pctChange(oldVal: price, newVal: updatedVal.priceUSD, change: change, ineq: ineq) {
                     makeNotification(title: "\(type) for \(id)",
                         body: "Percent change is \(ineq) \(change). New price is \(updatedVal.priceUSD)")
                 }
-            } else if type == "Currency Value" {
+            } else if type == .currencyValue {
                 if priceChange(newVal: updatedVal.priceUSD, change: change, ineq: ineq) {
                     makeNotification(title: "\(type) for \(id)",
                         body: "\(id) \(ineq) \(change). New price is \(updatedVal.priceUSD)")
