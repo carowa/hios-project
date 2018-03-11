@@ -38,14 +38,14 @@ class Favorites {
      - Parameter name: Name of favorite cryptocurrency to remove
     */
 
-    // FIXME: The following implementations are now broken
+    // FIXME: Probably should use the swift 'count' name
     /**
-     Gets the size of favorites list
+     Gets the count of favorites list
      
-     - Returns: An Int representing the size of favorites list
+     - Returns: An Int representing the count of favorites list
     */
     func size() -> Int {
-        return self.list.count
+        return StorageManager.shared.fetchAllFavorites().count
     }
     
     /**
@@ -54,7 +54,8 @@ class Favorites {
      - Returns: An array of Strings with ids of cryptocurrencies
     */
     func getList() -> [String] {
-        return self.list
+        // FIXME: Actual implementation
+        return []
     }
     
     /**
@@ -64,9 +65,14 @@ class Favorites {
      - Returns: A Cryptocurrency object
     */
     func getElemById(id : String) -> Cryptocurrency {
-        return cryptoRepo.getElemById(id: id)
+        return CryptoRepo.shared.getElemById(id: id)
     }
 
+    /**
+     Removes a favorite with the given name, if it exists
+     
+     - Parameter name: A String representing the name of the element to delete
+    */
     func remove(name: String) {
         StorageManager.shared.remove(favoriteWithName: name)
     }
