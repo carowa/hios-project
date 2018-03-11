@@ -15,9 +15,9 @@ class StorageManager {
     // Shared object
     static let shared = StorageManager()
     // Encapsulation of the Core Data stack
-    let persistentContainer: NSPersistentContainer!
+    private let persistentContainer: NSPersistentContainer!
     // Background thread to commit changes on
-    lazy var backgroundContext: NSManagedObjectContext = {
+    private lazy var backgroundContext: NSManagedObjectContext = {
         return self.persistentContainer.newBackgroundContext()
     }()
     
