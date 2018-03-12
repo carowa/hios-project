@@ -35,9 +35,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         favoritesTableView.addSubview(refresher)
         navigationItem.title = "Home"
         
-        // FIXME: Remove example loading when unneeded
-        let c = CoinAPIHelper()
-        c.update() {
+        CoinAPIHelper().update() {
             self.cryptoList = self.cryptoRepo.getCryptoList()
             // Access the main thread to update UI elements
             DispatchQueue.main.async() {
