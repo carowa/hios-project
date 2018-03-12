@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         favoritesTableView.addSubview(refresher)
+        navigationItem.title = "Home"
         
         // FIXME: Remove example loading when unneeded
         let c = CoinAPIHelper()
