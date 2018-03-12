@@ -54,7 +54,6 @@ class Favorites {
      - Returns: An array of Strings with ids of cryptocurrencies
     */
     func getList() -> [FavoriteItem] {
-        // FIXME: Actual implementation
         return StorageManager.shared.fetchAllFavorites()
     }
     
