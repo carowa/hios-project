@@ -13,7 +13,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let cryptoRepo = CryptoRepo.shared
     var cryptoList:[Cryptocurrency] = []
     var refresher:UIRefreshControl = UIRefreshControl()
-    private var myFavoritesIndex:Int = 0
+    private var myIndex:Int = 0
+    private var isFavorite:Bool = false
+    
     
     var favorites = Favorites.shared
     
@@ -65,7 +67,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        var rowHeight:CGFloat = 50
+        if indexPath.section == 1{
+            let id = cryptoList[indexPath.row].id
+            if favorites.contains(name: id) {
+                rowHeight = 0
+            }
+        }
+        return rowHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,8 +95,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     label = "There's nothing to show here"
                 }
             case 1:
-                label = cryptoList[indexPath.row].name
-                price = String(cryptoList[indexPath.row].priceUSD)
+                let id = cryptoList[indexPath.row].id
+                if !favorites.contains(name: id) {
+                    label = cryptoList[indexPath.row].name
+                    price = String(cryptoList[indexPath.row].priceUSD)
+                } else {
+                    cell.isHidden = true
+                }
             default:
                 break
         }
@@ -98,7 +112,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == favoritesTableView {
-            myFavoritesIndex = indexPath.row
+            myIndex = indexPath.row
+            isFavorite = indexPath.section == 0 ? true : false
             performSegue(withIdentifier: "showDetailSegue", sender: self)
         }
     }
@@ -106,7 +121,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "showDetailSegue") {
             let detailedController = segue.destination as! DetailedViewController
-            detailedController.currency = cryptoList[myFavoritesIndex]
+            if isFavorite {
+                let curr = favorites.getElemById(id: favorites.getList()[myIndex].name!)
+                detailedController.currency = curr
+            } else {
+                detailedController.currency = cryptoList[myIndex]
+            }
         }
     }
     
