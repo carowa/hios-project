@@ -223,6 +223,9 @@
                         <viewLayoutGuide key="safeArea" id="NM3-Ia-0nE"/>
                     </view>
                     <connections>
+                        <outlet property="byDay" destination="iCT-8x-dS0" id="FbX-zw-DRD"/>
+                        <outlet property="byHour" destination="bXN-va-Ky9" id="cMD-eT-yIL"/>
+                        <outlet property="byWeek" destination="Xji-re-Gfv" id="WYo-X3-ORf"/>
                         <outlet property="currentPriceLabel" destination="Xkp-Jp-YAi" id="LjJ-BV-f2C"/>
                         <outlet property="favoritesActionButton" destination="4LD-4Z-cKU" id="1UJ-ot-J7u"/>
                         <outlet property="idLabel" destination="uI5-eS-Jrb" id="hLR-E5-TtB"/>

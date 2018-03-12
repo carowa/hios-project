@@ -20,12 +20,19 @@ class DetailedViewController: UIViewController {
     @IBOutlet weak var percentChangeLabel: UILabel!
     @IBOutlet weak var favoritesActionButton: UIButton!
     
+    
+    @IBOutlet weak var byHour: UIButton!
+    @IBOutlet weak var byDay: UIButton!
+    @IBOutlet weak var byWeek: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = currency?.name
         idLabel.text = currency?.symbol
         currentPriceLabel.text = "$" + String(format:"%.2f", currency!.priceUSD)
-        percentChangeLabel.text = ""
+        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
+        // format highlighted button
+        formatSelection(button: byHour)
         if addedAlert {
             navigationItem.hidesBackButton = true
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .done, target: self, action: #selector(goToMainView))
@@ -39,6 +46,30 @@ class DetailedViewController: UIViewController {
         }
     }
     
+    /**
+     Changes the appearence of the 'selected' button by adding a blue border around it
+     
+     - Parameter button: Reference to the UI button
+     */
+    private func formatSelection(button : UIButton) {
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.blue.cgColor
+    }
+    
+    /**
+     Removes the formatting (blue border) if the button is not selected
+     
+     - Parameter button: Reference to the UI button for percent change
+     */
+    private func removeFormatting(button : UIButton) {
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 0
+        button.layer.borderWidth = 0
+        button.layer.borderColor = UIColor.clear.cgColor
+    }
+    
     @objc private func goToMainView() {
         performSegue(withIdentifier: "showMainSegue", sender: self)
     }
@@ -49,14 +80,23 @@ class DetailedViewController: UIViewController {
     
     @IBAction func showHourPercentChange(_ sender: UIButton) {
         percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
+        formatSelection(button: sender)
+        removeFormatting(button: byDay)
+        removeFormatting(button: byWeek)
     }
     
     @IBAction func showDayPercentChange(_ sender: UIButton) {
         percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeDay) + "%"
+        formatSelection(button: sender)
+        removeFormatting(button: byHour)
+        removeFormatting(button: byWeek)
     }
     
     @IBAction func showWeekPercentChange(_ sender: UIButton) {
         percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeWeek) + "%"
+        formatSelection(button: sender)
+        removeFormatting(button: byHour)
+        removeFormatting(button: byDay)
     }
     
     @IBAction func favoritesActionButton(_ sender: UIButton) {
