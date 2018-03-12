@@ -54,10 +54,14 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
+
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
-        // Do any additional setup after loading the view.
+        
+        // Create a notification observer
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,6 +108,13 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         return cell;
+    }
+    
+    /**
+     Reloads the TableView. Wrapper for use with a selector
+    */
+    @objc private func reloadTableView() {
+        tableView.reloadData()
     }
     
     /*

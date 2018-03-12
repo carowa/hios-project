@@ -22,6 +22,8 @@ class FavoriteTableViewCell: UITableViewCell {
             //favoriteButton.setTitle("\u{2705}", for: .normal)
             print(favoritesRepo.getFavorites())
         }
+        // Post the notification. Observer in AddFavoritesViewController
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)
     }
     
     override func awakeFromNib() {
