@@ -182,12 +182,11 @@ class Alerts: NSObject {
     private func priceChange(newVal : Double, change : Double, ineq : String) -> Bool {
         switch (ineq) {
         case "=":
-            return abs(newVal - Double(change)) < 1.0
+            return abs(newVal - change) == 0
         case "<":
-            return newVal < Double(change)
+            return newVal < change
         case ">":
-            print("new value: \(newVal)  change: \(change)")
-            return newVal > Double(change)
+            return newVal > change
         default:
             return false
         }
@@ -203,15 +202,14 @@ class Alerts: NSObject {
      - Returns: A boolean indicating whether there was a specified amount of price change
     */
     private func pctChange(oldVal : Double, newVal : Double, change : Double, ineq : String) -> Bool {
-        let pctDecrease : Double = ((oldVal - newVal) / oldVal) * 100
-        let pctIncrease : Double = ((newVal - oldVal) / oldVal) * 100
+        let pctChange : Double = abs(((oldVal - newVal) / oldVal) * 100)
         switch (ineq) {
             case "=":
-                return pctIncrease < 1.0 && pctDecrease < 1.0
+                return pctChange == 0
             case "<":
-                return pctDecrease < Double(change)
+                return pctChange < change
             case ">":
-                return pctIncrease > Double(change)
+                return pctChange > change
             default:
                 return false
         }
