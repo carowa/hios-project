@@ -174,15 +174,18 @@ class CoinAPIHelper: NSObject {
             location, response, error in
             if error != nil {
                 print("Error downloading file: \(error.debugDescription)")
+                self.loadFromLocalStorage(at: nil)
             }
             guard let localLocation: URL = location else {
                 print("Error grabbing local url from download.")
+                self.loadFromLocalStorage(at: nil)
                 return
             }
             // Check for HTTP status code 2xx
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
                     print ("Server error in downloading from API in CoinAPIHelper")
+                    self.loadFromLocalStorage(at: nil)
                     return
             }
             // Attempt to load JSON from the download at location
@@ -246,6 +249,7 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
         guard let httpResponse = downloadTask.response as? HTTPURLResponse,
             (200...299).contains(httpResponse.statusCode) else {
                 print ("Server error in downloading from API in CoinAPIHelper.urlSession()")
+                self.loadFromLocalStorage(at: nil)
                 return
         }
         // Attempt to load JSON from the download at location
@@ -262,6 +266,7 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
     internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if error != nil {
             print("Could not download JSON in CoinAPIHelper: \(error.debugDescription)")
+            self.loadFromLocalStorage(at: nil)
         }
     }
 }
