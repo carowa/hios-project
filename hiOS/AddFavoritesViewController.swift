@@ -88,45 +88,52 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Get the cryptoList to grab the coin id
         let cryptoKeys = cryptoRepo.getCryptoList()
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell
-        
+        // Add the arrow to the right
         cell.accessoryType = .disclosureIndicator
-        
         var id = cryptoKeys[indexPath.row].id
+        // If search is active, we need to check the filtered list
         if(searchActive){
             id = filtered[indexPath.row].id
         }
+        // Get the display name from the id
         cell.currencyLabel.text = cryptoRepo.getElemById(id: id).name
+        // Display or remove the check
         if favoritesRepo.contains(name: id) {
             cell.favoriteLabel.text = "\u{2705}"
         } else {
             cell.favoriteLabel.text = ""
         }
+        // Set the cell id
         cell.favoriteId = id
-        
         return cell;
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // Get the cryptoList to grab the coin id
         let cryptoKeys = cryptoRepo.getCryptoList()
         var id = cryptoKeys[indexPath.row].id
+        // If search is active, we need to check the filtered list
         if(searchActive){
             id = filtered[indexPath.row].id
         }
+        // Set alert title and color
         var alertTitle = "Add"
         var color = UIColor.green
+        // Adjust the alert title and color to remove if the cryptocurrency is already added
         if favoritesRepo.contains(name: id) {
             alertTitle = "Remove"
             color = UIColor.red
         }
+        // Create the action
         let cellAction = UITableViewRowAction(style: .normal, title: alertTitle) { (action, indexPath) in
             let actionCell = tableView.cellForRow(at: indexPath) as! FavoriteTableViewCell
             actionCell.toggleFavorite()
             tableView.reloadData()
         }
         cellAction.backgroundColor = color
-        
         return [cellAction]
     }
     
