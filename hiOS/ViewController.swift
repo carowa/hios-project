@@ -75,7 +75,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         switch indexPath.section {
             case 0:
                 let list = favorites.getList()
-                if (list.count > 0) {
+                if (list.count > 0 && cryptoRepo.getCount() > 0) {
                     guard let id = list[indexPath.row].name else {
                         return cell
                     }
