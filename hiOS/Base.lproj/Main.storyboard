@@ -27,24 +27,24 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mainViewTableCell" rowHeight="74" id="Wxc-fS-SC6" customClass="MainTableViewCell" customModule="hiOS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="74"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mainViewTableCell" id="Wxc-fS-SC6" customClass="MainTableViewCell" customModule="hiOS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wxc-fS-SC6" id="RLc-j3-bN4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaf-ib-VFT">
-                                                            <rect key="frame" x="15" y="11" width="345" height="50"/>
+                                                            <rect key="frame" x="15" y="11" width="345" height="44"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identifier" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLJ-oG-57t">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="259.5" height="50"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="259.5" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-IN-71Y">
-                                                                    <rect key="frame" x="259.5" y="0.0" width="85.5" height="50"/>
+                                                                    <rect key="frame" x="259.5" y="0.0" width="85.5" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -52,7 +52,7 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="Bzb-IN-71Y" firstAttribute="width" secondItem="hLJ-oG-57t" secondAttribute="width" multiplier="0.33" id="2RF-BC-r33"/>
-                                                                <constraint firstAttribute="height" constant="50" id="3Cv-Nw-rLf"/>
+                                                                <constraint firstAttribute="height" constant="44" id="3Cv-Nw-rLf"/>
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>

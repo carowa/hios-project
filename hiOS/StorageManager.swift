@@ -152,6 +152,15 @@ class StorageManager {
     }
     
     /**
+     Removes an Alert using AlertItem
+     
+     - Parameter alert: `AlertItem` to remove
+     */
+    func remove(alertItem: AlertItem) {
+        backgroundContext.delete(alertItem)
+    }
+    
+    /**
      Gets all added favorites from the persistent container.
      
      - Returns: Array of `FavoriteItem`s contained in the persistent container.

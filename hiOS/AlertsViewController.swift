@@ -9,7 +9,7 @@
 import UIKit
 
 class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    let alerts:[AlertItem] = Alerts.shared.getAlerts()
+    var alerts:[AlertItem] = Alerts.shared.getAlerts()
     var addedAlert:Bool = false
     var currency:Cryptocurrency? = nil
     var myIndex:Int = 0
@@ -51,18 +51,24 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 62
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "alertsViewTableCell", for: indexPath) as! AlertsTableViewCell
+        // Add the arrow to the right
+        cell.accessoryType = .disclosureIndicator
+        // If there are alerts
         if alerts.count > 0 {
-        let currAlert = alerts[indexPath.row]
-        guard let id = currAlert.currencyId else { return cell }
-        cell.identifierLabel?.text = id
-        let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(format: "%.3f", Double(currAlert.alertValue)))"
-        cell.alertTypeLabel?.text = alertString
+            let currAlert = alerts[indexPath.row]
+            // Get the id for the cell. Otherwise return
+            guard let id = currAlert.currencyId else {
+                return cell
+            }
+            cell.identifierLabel?.text = CryptoRepo.shared.getElemById(id: id).name
+            let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(format: "%.3f", Double(currAlert.alertValue)))"
+            cell.alertTypeLabel?.text = alertString
         } else {
             cell.identifierLabel?.text = "There are no alerts"
             cell.alertTypeLabel?.text = ""
@@ -73,6 +79,22 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             myIndex = indexPath.row
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let cell = tableView.cellForRow(at: indexPath) as! AlertsTableViewCell
+        // No action for an empty cell
+        if (cell.identifierLabel.text?.isEmpty)! || cell.identifierLabel.text == "There are no alerts" {
+            return []
+        }
+        // Create the action
+        let cellAction = UITableViewRowAction(style: .normal, title: "Remove") { (action, indexPath) in
+            StorageManager.shared.remove(alertItem: self.alerts[indexPath.row])
+            self.alerts = Alerts.shared.getAlerts()
+            tableView.reloadData()
+        }
+        cellAction.backgroundColor = UIColor.red
+        return [cellAction]
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

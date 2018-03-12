@@ -68,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var rowHeight:CGFloat = 50
+        var rowHeight:CGFloat = 62
         if indexPath.section == 1{
             let id = cryptoList[indexPath.row].id
             if favorites.contains(name: id) {
@@ -80,6 +80,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
+        // Add the arrow to the right
+        cell.accessoryType = .disclosureIndicator
         var label : String = ""
         var price : String = ""
         switch indexPath.section {
