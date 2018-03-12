@@ -37,7 +37,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         if(searchActive) {
             return filtered.count
         }
-        print("cryptorepo count: \(cryptoRepo.getCount())")
+//        print("cryptorepo count: \(cryptoRepo.getCount())")
         return cryptoRepo.getCount()
     }
 
@@ -77,7 +77,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cryptoKeys = cryptoRepo.getKeysList()
-        print("CryptoKeys: \(cryptoKeys)")
+//        print("CryptoKeys: \(cryptoKeys)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
         
 //        if(searchActive){
@@ -86,7 +86,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
 //        } else {
 //            cell.currencyLabel.text = cryptoKeys[indexPath.row];
 //        }
-        print("lets partyyyy")
+//        print("lets partyyyy")
         cell.currencyLabel.text = cryptoKeys[indexPath.row];
         return cell;
     }

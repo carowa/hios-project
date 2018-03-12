@@ -202,7 +202,12 @@ class Alerts: NSObject {
      - Returns: A boolean indicating whether there was a specified amount of price change
     */
     private func pctChange(oldVal : Double, newVal : Double, change : Double, ineq : String) -> Bool {
-        let pctChange : Double = abs(((oldVal - newVal) / oldVal) * 100)
+        var pctChange:Double = 0
+        if(newVal < oldVal) {
+            pctChange = ((oldVal - newVal) / oldVal) * 100 // formula for % decrease
+        } else {
+            pctChange = ((newVal - oldVal) / oldVal) * 100 // formula for % increase
+        }
         switch (ineq) {
             case "=":
                 return pctChange == 0
