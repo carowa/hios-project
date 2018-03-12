@@ -9,10 +9,12 @@
 import UIKit
 
 class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    let alerts:[Alert] = Alerts.shared.getAlerts()
+    let alerts:[AlertItem] = Alerts.shared.getAlerts()
     var addedAlert:Bool = false
     var currency:Cryptocurrency? = nil
     var myIndex:Int = 0
+    
+    let alertTypeString:[String] = ["none", "Percent Change", "Price"]
     
     @IBOutlet weak var alertsTableView: UITableView!
     
@@ -52,9 +54,9 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "alertsViewTableCell", for: indexPath) as! AlertsTableViewCell
         let currAlert = alerts[indexPath.row]
-        let id = currAlert.getId()
+        guard let id = currAlert.currencyId else { return cell }
         cell.identifierLabel?.text = id
-        let alertString = "\(currAlert.getAlertType()) \(currAlert.getInequality()) \(String(currAlert.getAlertValue()))"
+        let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(currAlert.alertValue))"
         cell.alertTypeLabel?.text = alertString
         return cell
     }
@@ -71,6 +73,12 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             detailedController.addedAlert = true
         }
     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // reload favorties table view data source after a segue
+        alertsTableView.reloadData()
     }
 
 }

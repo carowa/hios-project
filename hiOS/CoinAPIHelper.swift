@@ -134,6 +134,7 @@ class CryptoRepo {
      
     */
     func getElemById(id : String) -> Cryptocurrency {
+        // TODO: Consider checking before unwrapping Optionals
         return cryptoList[id]!
     }
 }

@@ -126,8 +126,8 @@ class Alerts: NSObject {
      
      - Returns: An array of `Alert` objects
     */
-    func getAlerts() -> [Alert] {
-        return []
+    func getAlerts() -> [AlertItem] {
+        return StorageManager.shared.fetchAllAlerts()
     }
     
     /**
