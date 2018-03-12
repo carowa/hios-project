@@ -17,7 +17,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     
     var searchActive: Bool = false
-    var filtered: [String] = []
+    var filtered: [Cryptocurrency] = []
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         print("in searchBarTextDidBeginEditing")
@@ -58,8 +58,6 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         searchBar.delegate = self
         navigationItem.title = "Add Favorites"
-        // Create a notification observer
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,11 +71,11 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let cryptoKeys = cryptoRepo.getKeysList()
+        let cryptoKeys = cryptoRepo.getCryptoList()
         self.tableView.reloadData()
 
-        filtered = cryptoKeys.filter({ (text) -> Bool in
-            let tmp: NSString = text as NSString
+        filtered = cryptoKeys.filter({ (cryptocurrency) -> Bool in
+            let tmp: NSString = cryptocurrency.name as NSString
             let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             return range.location != NSNotFound
         })
@@ -90,22 +88,46 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cryptoKeys = cryptoRepo.getKeysList()
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
+        let cryptoKeys = cryptoRepo.getCryptoList()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell
         
-        cell.currencyLabel.text = cryptoKeys[indexPath.row];
+        cell.accessoryType = .disclosureIndicator
         
+        var id = cryptoKeys[indexPath.row].id
         if(searchActive){
-            cell.currencyLabel.text = filtered[indexPath.row]
+            id = filtered[indexPath.row].id
         }
-        
-        if favoritesRepo.contains(name: cell.currencyLabel.text!) {
-            cell.favoriteButton.setTitle("\u{2705}", for: .normal)
+        cell.currencyLabel.text = cryptoRepo.getElemById(id: id).name
+        if favoritesRepo.contains(name: id) {
+            cell.favoriteLabel.text = "\u{2705}"
         } else {
-            cell.favoriteButton.setTitle("Add", for: .normal)
+            cell.favoriteLabel.text = ""
         }
+        cell.favoriteId = id
         
         return cell;
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let cryptoKeys = cryptoRepo.getCryptoList()
+        var id = cryptoKeys[indexPath.row].id
+        if(searchActive){
+            id = filtered[indexPath.row].id
+        }
+        var alertTitle = "Add"
+        var color = UIColor.green
+        if favoritesRepo.contains(name: id) {
+            alertTitle = "Remove"
+            color = UIColor.red
+        }
+        let cellAction = UITableViewRowAction(style: .normal, title: alertTitle) { (action, indexPath) in
+            let actionCell = tableView.cellForRow(at: indexPath) as! FavoriteTableViewCell
+            actionCell.toggleFavorite()
+            tableView.reloadData()
+        }
+        cellAction.backgroundColor = color
+        
+        return [cellAction]
     }
     
     /**
