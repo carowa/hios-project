@@ -37,7 +37,7 @@ class DetailedViewController: UIViewController {
             navigationItem.hidesBackButton = true
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .done, target: self, action: #selector(goToMainView))
         }
-        navigationItem.title = currency?.name
+        navigationItem.title = "Details"
         if favorites.contains(name: (currency?.id)!) {
             saved = true
             favoritesActionButton.setTitle("Remove From Favorites", for: .normal)
