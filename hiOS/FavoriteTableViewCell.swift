@@ -19,7 +19,7 @@ class FavoriteTableViewCell: UITableViewCell {
             // do nothing
         } else {
             favoritesRepo.add(name: currencyLabel.text!)
-            favoriteButton.setTitle("\u{2705}", for: .normal)
+            //favoriteButton.setTitle("\u{2705}", for: .normal)
             print(favoritesRepo.getFavorites())
         }
     }

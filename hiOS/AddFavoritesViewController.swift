@@ -26,6 +26,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("in searchBarTextDidEndEditing")
+        self.tableView.reloadData()
         searchActive = false;
     }
     
@@ -66,6 +67,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let cryptoKeys = cryptoRepo.getKeysList()
+        self.tableView.reloadData()
 
         filtered = cryptoKeys.filter({ (text) -> Bool in
             let tmp: NSString = text as NSString
@@ -85,16 +87,21 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
         
         print("this is favorites on 87: \(favoritesRepo.getFavorites())")
-        if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
-            cell.favoriteButton.setTitle("\u{2705}", for: .normal)
-        } else {
-            cell.favoriteButton.setTitle("Add", for: .normal)
-        }
-        
+
         if(searchActive){
             cell.currencyLabel.text = filtered[indexPath.row]
+            if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
+                cell.favoriteButton.setTitle("\u{2705}", for: .normal)
+            } else {
+                cell.favoriteButton.setTitle("Add", for: .normal)
+            }
         } else {
             cell.currencyLabel.text = cryptoKeys[indexPath.row];
+            if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
+                cell.favoriteButton.setTitle("\u{2705}", for: .normal)
+            } else {
+                cell.favoriteButton.setTitle("Add", for: .normal)
+            }
         }
         return cell;
     }
