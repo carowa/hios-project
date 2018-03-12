@@ -56,7 +56,7 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let currAlert = alerts[indexPath.row]
         guard let id = currAlert.currencyId else { return cell }
         cell.identifierLabel?.text = id
-        let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(currAlert.alertValue))"
+        let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(format: "%.3f", Double(currAlert.alertValue)))"
         cell.alertTypeLabel?.text = alertString
         return cell
     }

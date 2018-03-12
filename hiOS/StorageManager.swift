@@ -55,7 +55,7 @@ class StorageManager {
         alertItem.currencyId = alert.getId()
         alertItem.alertType = Int16(alert.getAlertType().rawValue)
         alertItem.inequality = alert.getInequality()
-        alertItem.alertValue = Int64(alert.getAlertValue())
+        alertItem.alertValue = Double(alert.getAlertValue())
         alertItem.currentPrice = alert.getCurrPrice()
         // Insert to our persistent container
         backgroundContext.insert(alertItem)
@@ -90,7 +90,7 @@ class StorageManager {
         // Create a fetch request with a filter to search for given name
         let alertFetch = NSFetchRequest<AlertItem>(entityName: "AlertItem")
         let currencyIdPredicate = NSPredicate(format: "currencyId == %@", alert.getId())
-        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Int64(alert.getAlertValue()))
+        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Double(alert.getAlertValue()))
         let alertInequalityPredicate = NSPredicate(format: "inequality == %@", alert.getInequality())
         let currentPricePredicate = NSPredicate(format: "currentPrice == %lf", alert.getCurrPrice())
         let alertTypePredicate = NSPredicate(format: "alertType == %d", Int16(alert.getAlertType().rawValue))
@@ -133,7 +133,7 @@ class StorageManager {
         // Create a fetch request with a filter to search for given name
         let alertFetch = NSFetchRequest<AlertItem>(entityName: "AlertItem")
         let currencyIdPredicate = NSPredicate(format: "currencyId == %@", alert.getId())
-        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Int64(alert.getAlertValue()))
+        let alertValuePredicate = NSPredicate(format: "alertValue == %lld", Double(alert.getAlertValue()))
         let alertInequalityPredicate = NSPredicate(format: "inequality == %@", alert.getInequality())
         let currentPricePredicate = NSPredicate(format: "currentPrice == %lf", alert.getCurrPrice())
         let alertTypePredicate = NSPredicate(format: "alertType == %d", Int16(alert.getAlertType().rawValue))
