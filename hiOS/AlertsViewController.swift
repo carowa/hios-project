@@ -26,6 +26,7 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             navigationItem.hidesBackButton = true
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: currency?.name, style: .done, target: self, action: #selector(goToDetailedView))
         }
+        navigationItem.title = "All Alerts"
         // Do any additional setup after loading the view.
     }
     
@@ -43,7 +44,10 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return alerts.count
+        if alerts.count > 0 {
+            return alerts.count
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -53,11 +57,17 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "alertsViewTableCell", for: indexPath) as! AlertsTableViewCell
+        if alerts.count > 0 {
         let currAlert = alerts[indexPath.row]
         guard let id = currAlert.currencyId else { return cell }
         cell.identifierLabel?.text = id
         let alertString = "\(alertTypeString[Int(currAlert.alertType)]) \(currAlert.inequality ?? "") \(String(format: "%.3f", Double(currAlert.alertValue)))"
         cell.alertTypeLabel?.text = alertString
+        } else {
+            cell.identifierLabel?.text = "There are no alerts"
+            cell.alertTypeLabel?.text = ""
+            cell.identifierLabel.adjustsFontSizeToFitWidth = true
+        }
         return cell
     }
     

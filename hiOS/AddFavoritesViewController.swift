@@ -57,7 +57,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
-        
+        navigationItem.title = "Add Favorites"
         // Create a notification observer
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)
     }

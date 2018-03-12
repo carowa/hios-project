@@ -390,38 +390,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ne6-5o-pyo">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ne6-5o-pyo">
                                 <rect key="frame" x="38" y="127" width="298" height="30"/>
                                 <state key="normal" title="Add Favorites"/>
                                 <connections>
                                     <segue destination="2JK-uV-4Ug" kind="show" id="Lrz-Jt-zAj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQr-L7-NR4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQr-L7-NR4">
                                 <rect key="frame" x="38" y="191" width="298" height="30"/>
                                 <state key="normal" title="View Alerts"/>
                                 <connections>
                                     <segue destination="IOu-p5-1PP" kind="show" id="hRa-cv-PcY"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFH-l4-Rjh">
-                                <rect key="frame" x="79" y="45" width="216" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CnU-hi-g6V" firstAttribute="trailing" secondItem="wFH-l4-Rjh" secondAttribute="trailing" constant="80" id="2P3-uR-Glt"/>
-                            <constraint firstItem="Ne6-5o-pyo" firstAttribute="top" secondItem="wFH-l4-Rjh" secondAttribute="bottom" constant="17" id="3tK-ST-w8i"/>
                             <constraint firstItem="FQr-L7-NR4" firstAttribute="top" secondItem="Ne6-5o-pyo" secondAttribute="bottom" constant="34" id="5fa-bf-AK7"/>
-                            <constraint firstItem="wFH-l4-Rjh" firstAttribute="leading" secondItem="CnU-hi-g6V" secondAttribute="leading" constant="79" id="Aw4-4t-Wxi"/>
                             <constraint firstItem="FQr-L7-NR4" firstAttribute="top" secondItem="Ne6-5o-pyo" secondAttribute="bottom" constant="34" id="EbL-WZ-iSu"/>
                             <constraint firstItem="FQr-L7-NR4" firstAttribute="leading" secondItem="CnU-hi-g6V" secondAttribute="leading" constant="38" id="IBg-vb-L6h"/>
-                            <constraint firstItem="Ne6-5o-pyo" firstAttribute="top" secondItem="wFH-l4-Rjh" secondAttribute="bottom" constant="17" id="Pj8-tN-flR"/>
                             <constraint firstItem="CnU-hi-g6V" firstAttribute="trailing" secondItem="FQr-L7-NR4" secondAttribute="trailing" constant="39" id="TTz-gL-l7b"/>
-                            <constraint firstItem="wFH-l4-Rjh" firstAttribute="top" secondItem="CnU-hi-g6V" secondAttribute="top" constant="25" id="Z7I-66-rlE"/>
                             <constraint firstItem="CnU-hi-g6V" firstAttribute="bottom" secondItem="FQr-L7-NR4" secondAttribute="bottom" constant="446" id="oyb-BR-XYp"/>
                             <constraint firstItem="Ne6-5o-pyo" firstAttribute="leading" secondItem="CnU-hi-g6V" secondAttribute="leading" constant="38" id="sTv-zH-BHZ"/>
                             <constraint firstItem="CnU-hi-g6V" firstAttribute="trailing" secondItem="Ne6-5o-pyo" secondAttribute="trailing" constant="39" id="tTo-9e-wPW"/>
@@ -453,7 +442,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkM-JU-RDV">
-                                                    <rect key="frame" x="15" y="11" width="123" height="45"/>
+                                                    <rect key="frame" x="15" y="11" width="145" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -515,8 +504,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RrD-Ec-AZT"/>
-        <segue reference="JIR-1J-r2i"/>
+        <segue reference="hRa-cv-PcY"/>
+        <segue reference="dcc-td-J8E"/>
         <segue reference="fbl-ni-s5o"/>
     </inferredMetricsTieBreakers>
 </document>
