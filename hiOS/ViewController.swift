@@ -32,14 +32,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         favoritesTableView.dataSource = self
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: #selector(ViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         favoritesTableView.addSubview(refresher)
         navigationItem.title = "Home"
         
+        handleRefresh(refresher)
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         CoinAPIHelper().update() {
             self.cryptoList = self.cryptoRepo.getCryptoList()
             // Access the main thread to update UI elements
             DispatchQueue.main.async() {
                 self.favoritesTableView.reloadData()
+                refreshControl.endRefreshing()
             }
         }
     }
