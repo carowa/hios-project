@@ -54,8 +54,13 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
                 print("Something went wrong creating Alert.AlertType AddAlertsViewController")
                 return
             }
+            guard let value = Double(valueTextField.text!) else {
+                let alert = UIAlertController(title: "Invalid Value", message: "Please enter a valid alert value", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
+                return
+            }
             alerts.addAlert(id: self.id, alertType: alertType, ineq: self.inequality,
-                            value: Double(valueTextField.text!)!, price: (currency?.priceUSD)!)
+                            value: value, price: (currency?.priceUSD)!)
             performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
     }
@@ -95,10 +100,6 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        print(textField.text)
-//        let allowedCharacters = CharacterSet.decimalDigits
-//        let characterSet = CharacterSet(charactersIn: string)
-//        return allowedCharacters.isSuperset(of: characterSet)
         let textFieldString = textField.text! as NSString;
         let newString = textFieldString.replacingCharacters(in: range, with:string)
         let floatRegEx = "^([0-9]+)?(\\.([0-9]+)?)?$"
