@@ -9,11 +9,17 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    private let availableSettings = ["Manage Favorites", "View Alerts"]
+    private let settingsImages = ["icons8-alarm-50", "icons8-maintenance-50"]
+    @IBOutlet weak var settingsTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Settings"
-        // Do any additional setup after loading the view.
+        settingsTableView.dataSource = self
+        settingsTableView.delegate = self
+        settingsTableView.tableFooterView = UIView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,4 +38,35 @@ class SettingsViewController: UIViewController {
     }
     */
 
+}
+
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return availableSettings.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            performSegue(withIdentifier: "showAddFavoritesSegue", sender: self)
+        } else {
+            performSegue(withIdentifier: "showViewAlertsSegue", sender: self)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath) as! SettingsTableViewCell
+        // Add the arrow to the right
+        cell.accessoryType = .disclosureIndicator
+        cell.settingLabel.text = availableSettings[indexPath.row]
+        cell.settingicon.image = UIImage.init(named: settingsImages[indexPath.row])
+        return cell
+    }
+    
+    
+}
+
+class SettingsTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var settingLabel: UILabel!
+    @IBOutlet weak var settingicon: UIImageView!
 }
