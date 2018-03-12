@@ -104,15 +104,6 @@ class CryptoRepo {
     }
     
     /**
-     Gets an `Array` of `Strings` that is the key list of cryptoList
-     
-     - Returns: An `Array` containing the `Cryptocurrency` elements in the list
-     */
-    func getKeysList() -> [String] {
-        return Array(cryptoList.keys)
-    }
-    
-    /**
      Gets an `Int` that is the length of cryptoList
      
      - Returns: An `Int` that is the length of cryptoList
@@ -183,6 +174,9 @@ class CoinAPIHelper: NSObject {
             location, response, error in
             if error != nil {
                 print("Error downloading file: \(error.debugDescription)")
+                self.loadFromLocalStorage(at: nil)
+                completionHandler()
+                return
             }
             guard let localLocation: URL = location else {
                 print("Error grabbing local url from download.")
@@ -255,6 +249,7 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
         guard let httpResponse = downloadTask.response as? HTTPURLResponse,
             (200...299).contains(httpResponse.statusCode) else {
                 print ("Server error in downloading from API in CoinAPIHelper.urlSession()")
+                self.loadFromLocalStorage(at: nil)
                 return
         }
         // Attempt to load JSON from the download at location
@@ -271,6 +266,7 @@ extension CoinAPIHelper: URLSessionDelegate, URLSessionTaskDelegate, URLSessionD
     internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if error != nil {
             print("Could not download JSON in CoinAPIHelper: \(error.debugDescription)")
+            self.loadFromLocalStorage(at: nil)
         }
     }
 }

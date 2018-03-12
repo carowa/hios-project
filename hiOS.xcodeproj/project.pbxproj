@@ -83,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				6B5B4ABF2049DD7F0080B92E /* CoinAPIHelper.swift */,
-				08A4B912205327AE000DBD10 /* AlertsTableViewCell.swift */,
 				6B347FAB20532761009B20BC /* StorageManager.swift */,
 				D6A37476204B708B004F9CBA /* Favorites.swift */,
 				D6A37478204B738D004F9CBA /* Alerts.swift */,
@@ -95,6 +94,7 @@
 				08C67EC02049CFAF000B401F /* DetailedViewController.swift */,
 				08C67EC22049D012000B401F /* SettingsViewController.swift */,
 				08C67EC42049D02C000B401F /* AlertsViewController.swift */,
+				08A4B912205327AE000DBD10 /* AlertsTableViewCell.swift */,
 				08C67EC62049D043000B401F /* AddAlertsViewController.swift */,
 				08C67EC82049D04F000B401F /* AddFavoritesViewController.swift */,
 				9FC4E7AB20530A9200513E8A /* FavoriteTableViewCell.swift */,

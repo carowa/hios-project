@@ -35,8 +35,11 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         valueTextField.delegate = self
         valueTextField.keyboardType = UIKeyboardType.decimalPad
         titleLabel.text = "Set New Alert for \(currency?.name ?? "nil")"
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -118,4 +121,9 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         }
     }
 
+    /// Calls this function when the tap is recognized.
+    @objc func dismissKeyboard() {
+        //Causes the text field to resign the first responder status.
+        valueTextField.endEditing(true)
+    }
 }

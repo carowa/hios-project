@@ -32,16 +32,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         favoritesTableView.dataSource = self
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: #selector(ViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         favoritesTableView.addSubview(refresher)
         navigationItem.title = "Home"
         
-        // FIXME: Remove example loading when unneeded
-        let c = CoinAPIHelper()
-        c.update() {
+        handleRefresh(refresher)
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        CoinAPIHelper().update() {
             self.cryptoList = self.cryptoRepo.getCryptoList()
             // Access the main thread to update UI elements
             DispatchQueue.main.async() {
                 self.favoritesTableView.reloadData()
+                refreshControl.endRefreshing()
             }
         }
     }
@@ -68,7 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var rowHeight:CGFloat = 50
+        var rowHeight:CGFloat = 62
         if indexPath.section == 1{
             let id = cryptoList[indexPath.row].id
             if favorites.contains(name: id) {
@@ -80,6 +84,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
+        // Add the arrow to the right
+        cell.accessoryType = .disclosureIndicator
         var label : String = ""
         var price : String = ""
         switch indexPath.section {
