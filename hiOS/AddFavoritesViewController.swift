@@ -26,7 +26,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("in searchBarTextDidEndEditing")
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
         searchActive = false;
     }
     
@@ -64,6 +64,11 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -90,7 +95,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         let cryptoKeys = cryptoRepo.getKeysList()
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
         
-        print("this is favorites on 87: \(favoritesRepo.getFavorites())")
+        //print("this is favorites on 87: \(favoritesRepo.getFavorites())")
 
         if(searchActive){
             cell.currencyLabel.text = filtered[indexPath.row]
