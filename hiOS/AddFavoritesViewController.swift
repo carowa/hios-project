@@ -95,7 +95,7 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         cell.accessoryType = .disclosureIndicator
         var id = cryptoKeys[indexPath.row].id
         // If search is active, we need to check the filtered list
-        if(searchActive){
+        if(filtered.count > 0){
             id = filtered[indexPath.row].id
         }
         // Get the display name from the id
