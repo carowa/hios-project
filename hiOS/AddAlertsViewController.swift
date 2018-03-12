@@ -11,15 +11,15 @@ import UIKit
 class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     let alerts = Alerts.shared
     var currency:Cryptocurrency? = nil
+    var id : String = ""
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var typeOfAlertPicker: UIPickerView!
     @IBOutlet weak var inequalityAlertPicker: UIPickerView!
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var setAlertButton: UIButton!
-    @IBOutlet weak var alertLabel: UILabel!
     
-    var alertType:String = ""
+    var alertTypeString:String = ""
     var inequality:String = ""
     
     var alertTypeArray:[String] = ["", "Percent Value", "Currency Value"]
@@ -33,7 +33,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         inequalityAlertPicker.delegate = self
         inequalityAlertPicker.dataSource = self
         valueTextField.delegate = self
-        valueTextField.keyboardType = UIKeyboardType.asciiCapableNumberPad
+        valueTextField.keyboardType = UIKeyboardType.decimalPad
         titleLabel.text = "Set New Alert for \(currency?.name ?? "nil")"
     }
 
@@ -43,13 +43,25 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     @IBAction func setAlert(_ sender: UIButton) {
-        if alertType != "" && inequality != "" && valueTextField.text != "" {
-            // delete this
-            alertLabel.text = alertType + inequality + valueTextField.text!
-            /* TODO: add alert object to array
-            
-             alerts.makeNotification(title: alertType + " for currency", body: "currency is " + inequality + " " + valueTextField.text!)
-            */
+        if alertTypeString != "" && inequality != "" && valueTextField.text != "" {
+            // Get index value inside of alertType
+            guard let alertIndex = self.alertTypeArray.index(of: alertTypeString) else {
+                print("Something went wrong grabbing ArrayIndex in AddAlertsViewController")
+                return
+            }
+            // Get actual Alert.AlertType. AlertType(0) = .none, AlertType(1) = .percentValue, AlertType(2) = .currencyValue
+            guard let alertType = Alert.AlertType(rawValue: alertIndex) else {
+                print("Something went wrong creating Alert.AlertType AddAlertsViewController")
+                return
+            }
+            guard let value = Double(valueTextField.text!) else {
+                let alert = UIAlertController(title: "Invalid Value", message: "Please enter a valid alert value", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
+                return
+            }
+            alerts.addAlert(id: self.id, alertType: alertType, ineq: self.inequality,
+                            value: value, price: (currency?.priceUSD)!)
+            performSegue(withIdentifier: "showAllAlertsSegue", sender: self)
         }
     }
     
@@ -67,7 +79,7 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
         } else if pickerView == inequalityAlertPicker {
             return inequalityArray.count
         }
-        return 0
+        return 0 
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -81,22 +93,28 @@ class AddAlertsViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if(pickerView == typeOfAlertPicker) {
-            alertType = alertTypeArray[row]
+            alertTypeString = alertTypeArray[row]
         } else {
             inequality = inequalityArray[row]
         }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
+        let textFieldString = textField.text! as NSString;
+        let newString = textFieldString.replacingCharacters(in: range, with:string)
+        let floatRegEx = "^([0-9]+)?(\\.([0-9]+)?)?$"
+        
+        let floatExPredicate = NSPredicate(format:"SELF MATCHES %@", floatRegEx)
+        
+        return floatExPredicate.evaluate(with: newString)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetailSegue" {
-            let detailedController = segue.destination as! DetailedViewController
-            detailedController.currency = currency
+        if segue.identifier == "showAllAlertsSegue" {
+            let allAlertsController = segue.destination as! AlertsViewController
+            allAlertsController.currency = currency
+            allAlertsController.addedAlert = true
         }
     }
 

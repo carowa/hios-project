@@ -9,7 +9,7 @@
 import UIKit
 
 class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    let favoritesRepo = FavoritesRepo.shared
+    let favoritesRepo = Favorites.shared
     
     let cryptoRepo = CryptoRepo.shared
     
@@ -26,7 +26,6 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("in searchBarTextDidEndEditing")
-        //self.tableView.reloadData()
         searchActive = false;
     }
     
@@ -44,7 +43,6 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         if(searchActive) {
             return filtered.count
         }
-        //print("cryptorepo count: \(cryptoRepo.getCount())")
         return cryptoRepo.getCount()
     }
 
@@ -95,23 +93,18 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
         let cryptoKeys = cryptoRepo.getKeysList()
         let cell = tableView.dequeueReusableCell(withIdentifier: "Main", for: indexPath) as! FavoriteTableViewCell;
         
-        //print("this is favorites on 87: \(favoritesRepo.getFavorites())")
-
+        cell.currencyLabel.text = cryptoKeys[indexPath.row];
+        
         if(searchActive){
             cell.currencyLabel.text = filtered[indexPath.row]
-            if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
-                cell.favoriteButton.setTitle("\u{2705}", for: .normal)
-            } else {
-                cell.favoriteButton.setTitle("Add", for: .normal)
-            }
-        } else {
-            cell.currencyLabel.text = cryptoKeys[indexPath.row];
-            if favoritesRepo.isInFavorites(name: cell.currencyLabel.text!) {
-                cell.favoriteButton.setTitle("\u{2705}", for: .normal)
-            } else {
-                cell.favoriteButton.setTitle("Add", for: .normal)
-            }
         }
+        
+        if favoritesRepo.contains(name: cell.currencyLabel.text!) {
+            cell.favoriteButton.setTitle("\u{2705}", for: .normal)
+        } else {
+            cell.favoriteButton.setTitle("Add", for: .normal)
+        }
+        
         return cell;
     }
     

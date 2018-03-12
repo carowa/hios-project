@@ -9,18 +9,14 @@
 import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
-    let favoritesRepo = FavoritesRepo.shared
+    let favoritesRepo = Favorites.shared
     
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var currencyLabel: UILabel!
     
     @IBAction func toggleFavorite(_ sender: Any) {
-        if favoritesRepo.isInFavorites(name: currencyLabel.text!) {
-            // do nothing
-        } else {
+        if !favoritesRepo.contains(name: currencyLabel.text!) {
             favoritesRepo.add(name: currencyLabel.text!)
-            //favoriteButton.setTitle("\u{2705}", for: .normal)
-            print(favoritesRepo.getFavorites())
         }
         // Post the notification. Observer in AddFavoritesViewController
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadFavoritesTableView"), object: nil)

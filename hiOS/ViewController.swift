@@ -9,25 +9,41 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var addedAlert:Bool = false
     let cryptoRepo = CryptoRepo.shared
     var cryptoList:[Cryptocurrency] = []
     var refresher:UIRefreshControl = UIRefreshControl()
-    private var myFavoritesIndex:Int = 0
+    private var myIndex:Int = 0
+    private var isFavorite:Bool = false
+    
+    
+    var favorites = Favorites.shared
     
     @IBOutlet weak var favoritesTableView: UITableView!
     
+    let sections = ["Favorites", "Popular Cryptocurrencies"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if addedAlert {
+            navigationItem.hidesBackButton = true
+        }
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: #selector(ViewController.populate), for: UIControlEvents.valueChanged)
         favoritesTableView.addSubview(refresher)
+        navigationItem.title = "Home"
         
         // FIXME: Remove example loading when unneeded
         let c = CoinAPIHelper()
-        c.update()
+        c.update() {
+            self.cryptoList = self.cryptoRepo.getCryptoList()
+            // Access the main thread to update UI elements
+            DispatchQueue.main.async() {
+                self.favoritesTableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,46 +52,89 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.sections.count
+    }
+    
+    func tableView(_: UITableView, titleForHeaderInSection: Int) -> String? {
+        return self.sections[titleForHeaderInSection]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            // return 1 when favorites is empty
+            return max(1, favorites.size())
+        }
         return cryptoList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        var rowHeight:CGFloat = 50
+        if indexPath.section == 1{
+            let id = cryptoList[indexPath.row].id
+            if favorites.contains(name: id) {
+                rowHeight = 0
+            }
+        }
+        return rowHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: populate only favorites and then all other currencies
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainViewTableCell", for: indexPath) as! MainTableViewCell
-        let id = cryptoList[indexPath.row].name //+ " - " + cryptoList[indexPath.row].id
-        cell.identifierLabel?.text = id
-        cell.priceLabel?.text = String(cryptoList[indexPath.row].priceUSD)
-        
+        var label : String = ""
+        var price : String = ""
+        switch indexPath.section {
+            case 0:
+                let list = favorites.getList()
+                if (list.count > 0 && cryptoRepo.getCount() > 0) {
+                    guard let id = list[indexPath.row].name else {
+                        return cell
+                    }
+                    label = cryptoRepo.getElemById(id: id).name
+                    price = String(cryptoRepo.getElemById(id: id).priceUSD)
+                } else {
+                    // when favorites is empty
+                    label = "There's nothing to show here"
+                }
+            case 1:
+                let id = cryptoList[indexPath.row].id
+                if !favorites.contains(name: id) {
+                    label = cryptoList[indexPath.row].name
+                    price = String(cryptoList[indexPath.row].priceUSD)
+                } else {
+                    cell.isHidden = true
+                }
+            default:
+                break
+        }
+        cell.identifierLabel?.text = label
+        cell.priceLabel?.text = price
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == favoritesTableView {
-            myFavoritesIndex = indexPath.row
+            myIndex = indexPath.row
+            isFavorite = indexPath.section == 0 ? true : false
             performSegue(withIdentifier: "showDetailSegue", sender: self)
         }
-    }
-    
-    // TODO: Remove populate option from the main table view later
-    @IBAction func populate(_ sender: UIButton) {
-        cryptoList = cryptoRepo.getCryptoList()
-        favoritesTableView.reloadData()
-        refresher.endRefreshing()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "showDetailSegue") {
             let detailedController = segue.destination as! DetailedViewController
-            detailedController.currency = cryptoList[myFavoritesIndex]
+            if isFavorite {
+                let curr = favorites.getElemById(id: favorites.getList()[myIndex].name!)
+                detailedController.currency = curr
+            } else {
+                detailedController.currency = cryptoList[myIndex]
+            }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // reload favorties table view data source after a segue
+        favoritesTableView.reloadData()
     }
 }
 

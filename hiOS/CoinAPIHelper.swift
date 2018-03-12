@@ -80,7 +80,7 @@ extension Cryptocurrency: Decodable {
 class CryptoRepo {
     static let shared = CryptoRepo()
     
-    private var order: [String] = []
+    private var orderedCryptoList: [Cryptocurrency] = []
     private var cryptoList: [String: Cryptocurrency] = [:]
     
     /**
@@ -88,7 +88,8 @@ class CryptoRepo {
      
      - Parameter element: `Cryptocurrency` element to add to list
     */
-    func add(element : Cryptocurrency) {
+    func add(element: Cryptocurrency) {
+        trackOrder(element: element)
         let key : String = element.id
         cryptoList[key] = element
     }
@@ -99,7 +100,7 @@ class CryptoRepo {
      - Returns: An `Array` containing the `Cryptocurrency` elements in the list
     */
     func getCryptoList() -> [Cryptocurrency] {
-        return Array(cryptoList.values)
+        return orderedCryptoList
     }
     
     /**
@@ -123,10 +124,18 @@ class CryptoRepo {
     /**
      Preserves the order of insertion
      
-     - Parameter name: Name of `Cryptocurrency` to preserve order of
+     - Parameter name: `Cryptocurrency` to preserve order of
     */
-    func trackOrder(name : String) {
-        order.append(name)
+    private func trackOrder(element: Cryptocurrency) {
+        orderedCryptoList.append(element)
+    }
+    
+    /*
+     
+    */
+    func getElemById(id : String) -> Cryptocurrency {
+        // TODO: Consider checking before unwrapping Optionals
+        return cryptoList[id]!
     }
 }
 
@@ -148,14 +157,48 @@ class CoinAPIHelper: NSObject {
 
     // MARK: Public functions
     /**
-     Updates the stored information using data from the CoinMarketCap API
+     Deprecated: Updates the stored information using data from the CoinMarketCap API
      */
+    @available(*, deprecated, message: "Deprecated because async functionality not documented, nor handled correctly. Please use update(completionHandler:)")
     public func update() {
         // TODO: Check for network connectivity
         // Create URLSession and start a download task
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
         let task = session.downloadTask(with: url.appendingPathComponent(Endpoints.ticker.rawValue))
+        task.resume()
+    }
+    
+    /**
+     Updates the stored information using data from the CoinMarketCap API and calls a handler upon completion.
+     
+     - Parameter completionHandler: The completion handler to call when the load request is complete.
+     */
+    public func update(completionHandler: @escaping () -> Void) {
+        // TODO: Check for network connectivity
+        // Create URLSession and start a download task
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+        let task = session.downloadTask(with: url.appendingPathComponent(Endpoints.ticker.rawValue)) {
+            location, response, error in
+            if error != nil {
+                print("Error downloading file: \(error.debugDescription)")
+            }
+            guard let localLocation: URL = location else {
+                print("Error grabbing local url from download.")
+                return
+            }
+            // Check for HTTP status code 2xx
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    print ("Server error in downloading from API in CoinAPIHelper")
+                    return
+            }
+            // Attempt to load JSON from the download at location
+            self.loadFromLocalStorage(at: localLocation)
+            // Call the user defined completion handler
+            completionHandler()
+        }
         task.resume()
     }
 
@@ -190,7 +233,6 @@ class CoinAPIHelper: NSObject {
             let cryptoRepo = CryptoRepo.shared
             for e in cryptoArray {
                 cryptoRepo.add(element: e)
-                cryptoRepo.trackOrder(name: e.id)
             }
         } catch (let writeError) {
             print("Error reading/writing from file in CoinAPIHelper: \(writeError)")

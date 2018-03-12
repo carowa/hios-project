@@ -7,65 +7,72 @@
 //
 
 import Foundation
+import CoreData
 
-/// Singleton object to store user's favorite cryptocurrencies
-class FavoritesRepo {
-    static let shared = FavoritesRepo()
-    
-    private var list : [String] = []
-    
+/// Wrapper on top of StorageManager to store user's favorite cryptocurrencies
+class Favorites {
+    static let shared = Favorites()
+        
     /**
-     Adds a new element to FavoritesRepo
+     Adds a new element to Favorites
      
-     - Parameter name: Name of favorite cryptocurrency to add
+     - Parameter name: Name of cryptocurrency to add to favorites list
     */
-    func add(name : String) {
-        list.append(name)
+    func add(name: String) {
+        StorageManager.shared.insert(favoriteWithName: name)
     }
     
     /**
-     Removes an element from FavoritesRepo
+     Checks whether a currency is already in Favorites
+     
+     - Parameter name: Name of cryptocurrency to check in favorites list
+     - Returns: boolean if currency is in favorites. True if yes, False if no.
+     */
+    func contains(name: String) -> Bool {
+        return StorageManager.shared.contains(favoriteWithName: name)
+    }
+    
+    /**
+     Removes an element from Favorites
      
      - Parameter name: Name of favorite cryptocurrency to remove
     */
-    func remove(name : String) {
-        let index = findItem(name: name)
-        // FIXME: This will crash if findItem returns -1.
-        list.remove(at: index)
-    }
-    
+
+    // FIXME: Probably should use the swift 'count' name
     /**
-     Returns true if `name` is in list, otherwise returns false
+     Gets the count of favorites list
      
-     - Parameter name: Name of favorite cryptocurrency to check
-     */
-    func isInFavorites(name : String) -> Bool {
-        let index = findItem(name: name)
-        return index > -1
-    }
-    
-    /**
-     Returns true if `name` is in list, otherwise returns false
-     
-     - Parameter name: Name of favorite cryptocurrency to check
-     */
-    func getFavorites() -> [String] {
-        return list
-    }
-    
-    /**
-     Helper function to find the index of an element
-     
-     - Parameter name: Name of the favorite cryptocurrency to find
-     - Returns: The index of the element or -1 if the element is not found
+     - Returns: An Int representing the count of favorites list
     */
-    private func findItem(name : String) -> Int {
-        for i in 0..<list.count {
-            let e: String = list[i]
-            if e == name {
-                return i
-            }
-        }
-        return -1
+    func size() -> Int {
+        return StorageManager.shared.fetchAllFavorites().count
+    }
+    
+    /**
+     Gets the list of user's favorite cryptocurrencies
+     
+     - Returns: An array of Strings with ids of cryptocurrencies
+    */
+    func getList() -> [FavoriteItem] {
+        return StorageManager.shared.fetchAllFavorites()
+    }
+    
+    /**
+     Gets the crypto currency object with the given id
+     
+     - Parameter id: A String representing the id of a cryptocurrency
+     - Returns: A Cryptocurrency object
+    */
+    func getElemById(id : String) -> Cryptocurrency {
+        return CryptoRepo.shared.getElemById(id: id)
+    }
+
+    /**
+     Removes a favorite with the given name, if it exists
+     
+     - Parameter name: A String representing the name of the element to delete
+    */
+    func remove(name: String) {
+        StorageManager.shared.remove(favoriteWithName: name)
     }
 }
