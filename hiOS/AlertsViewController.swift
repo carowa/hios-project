@@ -73,6 +73,8 @@ class AlertsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.identifierLabel?.text = "There are no alerts"
             cell.alertTypeLabel?.text = ""
             cell.identifierLabel.adjustsFontSizeToFitWidth = true
+            // Remove the arrow on the right
+            cell.accessoryType = .none
         }
         return cell
     }
