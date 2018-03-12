@@ -112,7 +112,7 @@ class DetailedViewController: UIViewController {
             saved = true
             favoritesActionButton.setTitle("Remove From Favorites", for: .normal)
             favorites.add(name: (currency?.id)!)
-            print(currency?.id ?? "id")
+//            print(currency?.id ?? "id")
             let alert = UIAlertController(title: "Added To Favorites", message: "You will now see \(currency?.name ?? "this currency") in your favorites list.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true)
