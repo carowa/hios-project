@@ -18,26 +18,6 @@ class AddFavoritesViewController: UIViewController, UITableViewDelegate, UITable
     
     var searchActive: Bool = false
     var filtered: [Cryptocurrency] = []
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("in searchBarTextDidBeginEditing")
-        searchActive = true;
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print("in searchBarTextDidEndEditing")
-        searchActive = false;
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("in searchBarCancelButtonClicked")
-        searchActive = false;
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("in searchBarSearchButtonClicked")
-        searchActive = false;
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive) {
