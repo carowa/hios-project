@@ -17,8 +17,9 @@ class DetailedViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var currentPriceLabel: UILabel!
-    @IBOutlet weak var percentChangeLabel: UILabel!
     @IBOutlet weak var favoritesActionButton: UIButton!
+    @IBOutlet weak var priceChangeScrollView: UIScrollView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     
     @IBOutlet weak var byHour: UIButton!
@@ -30,7 +31,6 @@ class DetailedViewController: UIViewController {
         titleLabel.text = currency?.name
         idLabel.text = currency?.symbol
         currentPriceLabel.text = "$" + String(format:"%.2f", currency!.priceUSD)
-        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
         // format highlighted button
         formatSelection(button: byHour)
         if addedAlert {
@@ -45,6 +45,37 @@ class DetailedViewController: UIViewController {
             saved = false
             favoritesActionButton.setTitle("Add To Favorites", for: .normal)
         }
+        
+        addDataToScrollView()
+        priceChangeScrollView.delegate = self
+        pageControl.currentPage = 0
+    }
+    
+    /// Adds text to the scrollview to display the percent changes
+    private func addDataToScrollView() {
+        let scrollWidth = priceChangeScrollView.frame.width
+        let scrollHeight = priceChangeScrollView.frame.height
+        let textOne = UILabel(frame: CGRect(x:0, y:0,width:scrollWidth, height:scrollHeight))
+        textOne.textColor = currency!.percentChangeHour >= 0.0 ? UIColor.green: UIColor.red
+        textOne.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
+        textOne.textAlignment = .center
+        textOne.font = textOne.font.withSize(35)
+        let textTwo = UILabel(frame: CGRect(x:scrollWidth, y:0,width:scrollWidth, height:scrollHeight))
+        textTwo.textColor = currency!.percentChangeDay >= 0.0 ? UIColor.green: UIColor.red
+        textTwo.text = String(format:"%.1f", currency!.percentChangeDay) + "%"
+        textTwo.textAlignment = .center
+        textTwo.font = textTwo.font.withSize(35)
+        let textThree = UILabel(frame: CGRect(x: scrollWidth * 2, y:0,width:scrollWidth, height:scrollHeight))
+        textThree.textColor = currency!.percentChangeWeek >= 0.0 ? UIColor.green: UIColor.red
+        textThree.text = String(format:"%.1f", currency!.percentChangeWeek) + "%"
+        textThree.textAlignment = .center
+        textThree.font = textThree.font.withSize(35)
+        
+        priceChangeScrollView.addSubview(textOne)
+        priceChangeScrollView.addSubview(textTwo)
+        priceChangeScrollView.addSubview(textThree)
+        
+        priceChangeScrollView.contentSize = CGSize(width:self.priceChangeScrollView.frame.width * 3, height:self.priceChangeScrollView.frame.height)
     }
     
     /**
@@ -80,21 +111,21 @@ class DetailedViewController: UIViewController {
     }
     
     @IBAction func showHourPercentChange(_ sender: UIButton) {
-        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeHour) + "%"
+        moveTo(pageNumber: 0)
         formatSelection(button: sender)
         removeFormatting(button: byDay)
         removeFormatting(button: byWeek)
     }
     
     @IBAction func showDayPercentChange(_ sender: UIButton) {
-        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeDay) + "%"
+        moveTo(pageNumber: 1)
         formatSelection(button: sender)
         removeFormatting(button: byHour)
         removeFormatting(button: byWeek)
     }
     
     @IBAction func showWeekPercentChange(_ sender: UIButton) {
-        percentChangeLabel.text = String(format:"%.1f", currency!.percentChangeWeek) + "%"
+        moveTo(pageNumber: 2)
         formatSelection(button: sender)
         removeFormatting(button: byHour)
         removeFormatting(button: byDay)
@@ -131,5 +162,46 @@ class DetailedViewController: UIViewController {
             let mainController = segue.destination as! ViewController
             mainController.addedAlert = true
         }
+    }
+}
+
+extension DetailedViewController: UIScrollViewDelegate {
+    // Called when scrolling is finished
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        // Test the offset and calculate the current page after scrolling ends
+        let pageWidth:CGFloat = scrollView.frame.width
+        let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+        // Change the indicator
+        switch Int(currentPage) {
+        case 0:
+            formatSelection(button: byHour)
+            removeFormatting(button: byDay)
+            removeFormatting(button: byWeek)
+        case 1:
+            formatSelection(button: byDay)
+            removeFormatting(button: byHour)
+            removeFormatting(button: byWeek)
+        default:
+            formatSelection(button: byWeek)
+            removeFormatting(button: byHour)
+            removeFormatting(button: byDay)
+        }
+        // Set the page control
+        self.pageControl.currentPage = Int(currentPage);
+    }
+    
+    // Call to move to a specific page number (from 0)
+    func moveTo(pageNumber: CGFloat){
+        let pageWidth:CGFloat = self.priceChangeScrollView.frame.width
+        let maxWidth:CGFloat = pageWidth * 3
+        
+        var slideToX = pageNumber * pageWidth
+        
+        if  slideToX >= maxWidth
+        {
+            slideToX = 0
+        }
+        self.priceChangeScrollView.scrollRectToVisible(CGRect(x:slideToX, y:0, width:pageWidth, height:self.priceChangeScrollView.frame.height), animated: true)
+        self.pageControl.currentPage = Int(pageNumber)
     }
 }
