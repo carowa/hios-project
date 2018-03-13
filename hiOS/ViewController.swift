@@ -100,6 +100,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 } else {
                     // when favorites is empty
                     label = "There's nothing to show here"
+                    cell.accessoryType = .none
                 }
             case 1:
                 let id = cryptoList[indexPath.row].id
@@ -121,7 +122,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if tableView == favoritesTableView {
             myIndex = indexPath.row
             isFavorite = indexPath.section == 0 ? true : false
-            performSegue(withIdentifier: "showDetailSegue", sender: self)
+            if !isFavorite || (isFavorite && favorites.getList().count > 0) {
+                performSegue(withIdentifier: "showDetailSegue", sender: self)
+            }
         }
     }
     
